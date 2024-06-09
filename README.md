@@ -437,7 +437,7 @@ Response:
 
   - Design MySQL database schema for user profiles and team selections
   - Create database with necessary tables
-  - users: id, username, email, password_hash, favorite_team
+  - users: id, username, first_name, last_name, email, password_hash, team_id
   - teams: id, name, primary_color, secondary_color, alternative_color, special_color
   - Create migrations and seeds for initial user data
   - Seed with current F1 teams
@@ -523,4 +523,5 @@ Response:
 - A filter in the search that takes into account the different point system throughout the years so the user can filter drivers based on their overall performance instead of statistical averages
 
 # pitstop-capstone
+
 # capstone
