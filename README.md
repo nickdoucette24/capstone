@@ -546,5 +546,3 @@ Response:
 - More options for the user to customize their profile layout
 
 # pitstop-capstone
-
-# capstone
