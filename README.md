@@ -82,27 +82,27 @@ Formula 1 has been on the rise for a few years now, yet it still lacks a simple 
 
 ### Welcome Page
 
-![](/client/src/assets/images/mockups/welcome-page.png)
+![Hand drawn image of the Welcome Page](./client/src/assets/images/mockups/welcome-page.png)
 
 ### Profile Page
 
-![](/client/src/assets/images/mockups/profile-page.png)
+![Hand drawn image of the Profile Page](./client/src/assets/images/mockups/profile-page.png)
 
 ### This Year Page
 
-![](/client/src/assets/images/mockups/this-year-page.png)
+![Hand drawn image of the This Year Page](./client/src/assets/images/mockups/this-year-page.png)
 
 ### Race Weekend Page
 
-![](/client/src/assets/images/mockups/race-weekend-page.png)
+![Hand drawn image of the Race Weekend Page](./client/src/assets/images/mockups/race-weekend-page.png)
 
 ### Archive Page
 
-![](/client/src/assets/images/mockups/archive-page.png)
+![Hand drawn image of the Archive Page](./client/src/assets/images/mockups/archive-page.png)
 
 ### Custom Search Page
 
-![](/client/src/assets/images/mockups/custom-search-page.png)
+![Hand drawn image of the Custom Search Page](./client/src/assets/images/mockups/custom-search-page.png)
 
 ### Data
 
