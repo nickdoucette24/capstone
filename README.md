@@ -78,9 +78,31 @@ Formula 1 has been on the rise for a few years now, yet it still lacks a simple 
 - Custom Search
   - Table of all the stats which can be filtered to the user's liking
 
-### Mockups
+## Mockups
 
-![]()
+### Welcome Page
+
+![](/client/src/assets/images/mockups/welcome-page.HEIC)
+
+### Profile Page
+
+![](/client/src/assets/images/mockups/profile-page.HEIC)
+
+### This Year Page
+
+![](/client/src/assets/images/mockups/this-year-page.HEIC)
+
+### Race Weekend Page
+
+![](/client/src/assets/images/mockups/race-weekend-page.HEIC)
+
+### Archive Page
+
+![](/client/src/assets/images/mockups/archive-page.HEIC)
+
+### Custom Search Page
+
+![](/client/src/assets/images/mockups/custom-search-page.HEIC)
 
 ### Data
 
@@ -521,6 +543,7 @@ Response:
 - A polished F1 Fantasy league would be a massive task but would add tons of value to the site
 - Team Radio button to listen to the teams live radio when following an individual driver during a session
 - A filter in the search that takes into account the different point system throughout the years so the user can filter drivers based on their overall performance instead of statistical averages
+- More options for the user to customize their profile layout
 
 # pitstop-capstone
 
