@@ -4,11 +4,11 @@ pitstop
 
 ## Overview
 
-'pitstop' is a comprehensive dive into the world and stats of Formula 1. Users will be able to customize a Profile Page exactly to their liking. Predefined slots will be available, which allow the user to select exactly which stat or tracker they would like to see. Users will also be able to choose a favourite team, switching the entire theme of the website to match that teams colours. Aside from customization, users will be able to follow the current season by viewing each race weekend's results, as well as having a live session tracker which will allow them to follow along and view stats that they typically won't have access to when streaming live. Finally, the Archive Page will allow users to interact with data throughout the history of the sport. This will contain rankings in main statistical categories, as well as the ability the make custom filtered searches to view rankings of specific statistical categories.
+'pitstop' is a comprehensive dive into the world and stats of Formula 1. Users will be able to customize a Profile Page exactly to their liking. Predefined slots will be available, allowing users to select precisely which stats or trackers they want to see displayed on their profile. Users can choose a favourite team, changing the entire theme of the website to match that team's colours. In addition to customization, users can follow the current season by viewing each race weekend's results and using a live session tracker to view stats that are typically unavailable when streaming live. The Archive Page allows users to interact with data throughout the history of the sport, containing rankings in main statistical categories and enabling custom filtered searches to view specific statistical rankings.
 
 ### Problem
 
-Formula 1 has been on the rise for a few years now, yet it still lacks a simple way to view current season and race data as well as historical stats. The go-to spots to get this type of data lack seamless user interaction, and in most cases are clunky and out of date. 'pitstop' will allow users to follow races live and see stats that they otherwise wouldn't have access to while watching the broadcast. This will provide new fans much better insight when trying to learn the complex details of the sport, as well as providing seasoned fans a more in-depth portal to track data and stats as they happen. Formula 1 is growing, but it is focusing more on hooking new fans on the drama of the sport, rather than the complex technical strategies and engineering that true fans fall in love with. 'pitstop' will be a platform to help change that and cater to fans who want to know the sport, rather than just follow the drama.
+Formula 1 has been on the rise for a few years now, yet it still lacks a straightforward way to view current season and race data as well as historical stats. The go-to spots for this type of data often lack seamless user interaction and are usually clunky and outdated. 'pitstop' will allow users to follow races live and see stats that they otherwise wouldn't have access to while watching the broadcast. This will provide new fans with much better insight when trying to learn the complex details of the sport and give seasoned fans a more in-depth portal to track data and stats as they happen. Formula 1 is growing, but it focuses more on hooking new fans on the drama of the sport rather than the complex technical strategies and engineering that true fans fall in love with. 'pitstop' will be a platform to help change that and cater to fans who want to know the sport, rather than just follow the drama.
 
 ### User Profile
 
@@ -35,18 +35,21 @@ Formula 1 has been on the rise for a few years now, yet it still lacks a simple 
 
 ### Tech Stack
 
-- React.js
-- MySQL
-- Node.js
-- Express.js
-- Client libraries:
+- Frontend
+  - React.js
   - react-router-dom
   - Axios
   - Sass
-- Server libraries:
+- Backend
+  - Node.js
+  - Express.js
   - Knex
+- Database
+  - MySQL
+- Authentication
   - jsonwebtoken
   - bcrypt
+- Utilities
   - cors
   - dotenv
   - uuid
@@ -66,7 +69,7 @@ Formula 1 has been on the rise for a few years now, yet it still lacks a simple 
   - Log In + Sign Up Forms (also displayed in the fixed header)
 - Profile Page
   - Custom theme of selected team
-  - Chosen Data and Trackers fill predefined slots
+  - Chosen data and trackers fill predefined slots
 - This Year Page
   - List of all the races
   - Driver & Team standings
@@ -113,15 +116,94 @@ Formula 1 has been on the rise for a few years now, yet it still lacks a simple 
 
 ### Endpoints
 
+**POST /auth/login**
+
+- Route to log in an existing user
+
+Parameters:
+
+- email or username
+- password
+
+Status Codes:
+
+- 201 Created: User logged in successfully.
+- 400 Bad Request: Invalid email/username or password.
+- 500 Internal Server Error: Server error.
+
+Request:
+
+```
+{
+  "identifier": "nickdoucette@capstone.com", // or "nickdoucette"
+  "password": "securepassword123",
+}
+```
+
+Response:
+
+```
+{
+  "message": "User logged in successfully.",
+  "token": "example-jwt-token"
+}
+```
+
+**POST /auth/register**
+
+- Route to register a new user
+- Passwords will be hashed for data security
+- Data will be cashed
+
+Parameters:
+
+- username
+- first_name
+- last_name
+- email
+- password
+- team_id
+
+Status Codes:
+
+- 201 Created: User registered successfully.
+- 400 Bad Request: Invalid input or email already in use.
+- 500 Internal Server Error: Server error.
+
+Request:
+
+```
+{
+  "username": "nickdoucette",
+  "first_name": "Nick",
+  "last_name": "Doucette",
+  "email": "nickdoucette@capstone.com",
+  "password": "securepassword123",
+  "team_id": 1
+}
+```
+
+Response:
+
+```
+{
+  "message": "User registered successfully.",
+  "userId": 1
+}
+```
+
 **GET /live/drivers**
 
-- "/live" react route
 - Get list of drivers currently on track
 
 Parameters:
 
-- User clicks on the current session to populate the data
-- Data refreshes every few seconds
+- None
+
+Status Codes:
+
+- 200 OK: Driver data successfully retrieved.
+- 500 Internal Server Error: Server error.
 
 Response:
 
@@ -143,13 +225,16 @@ Response:
 
 **GET /live/car-data**
 
-- "/live" react route
 - Get data from each car currently on track
 
 Parameters:
 
-- User clicks on the current session to populate the data
-- Data refreshes every few seconds
+- None
+
+Status Codes:
+
+- 200 OK: Car data successfully retrieved.
+- 500 Internal Server Error: Server error.
 
 Response:
 
@@ -172,13 +257,16 @@ Response:
 
 **GET /live/intervals**
 
-- "/live" react route
 - Get data regarding the gap to the leader and car ahead
 
 Parameters:
 
-- User clicks on the current session to populate the data
-- Data refreshes every few seconds
+- None
+
+Status Codes:
+
+- 200 OK: Interval data successfully retrieved.
+- 500 Internal Server Error: Server error.
 
 Response:
 
@@ -198,13 +286,24 @@ Response:
 
 **GET /live/race-details**
 
-- "/live" react route
 - Get details about each race
 
 Parameters:
 
-- User clicks on which race of the current season they want to view
-- User clicks on which session they want to follow and race-data will populate
+- meeting_key
+
+Status Codes:
+
+- 200 OK: Car data successfully retrieved.
+- 500 Internal Server Error: Server error.
+
+Request:
+
+```
+{
+  "meeting_key": 1219
+}
+```
 
 Response:
 
@@ -227,13 +326,27 @@ Response:
 
 **GET /live/pitstops**
 
-- "/live" react route
 - Get details about each pitstop for each driver
 
 Parameters:
 
-- User clicks on the current race session to populate the data
-- Data refreshes every few seconds
+- meeting_key
+- session_key
+
+Status Codes:
+
+- 200 OK: Pitstop data successfully retrieved.
+- 500 Internal Server Error: Server error.
+
+Request:
+
+```
+{
+  "meeting_key": 1219,
+  "session_key": 9158
+}
+
+```
 
 Response:
 
@@ -245,6 +358,7 @@ Response:
       "lap_number": 5,
       "meeting_key": 1219,
       "pit_duration": 24.5,
+      "pitstop_time": 2.4,
       "session_key": 9158
     }
     ...
@@ -258,8 +372,21 @@ Response:
 
 Parameters:
 
-- User clicks on the current session to populate the data
-- Data refreshes every few seconds
+- session_key
+
+Status Codes:
+
+- 200 OK: Live position data successfully retrieved.
+- 500 Internal Server Error: Server error.
+
+Request:
+
+```
+{
+  "session_key": 9144
+}
+
+```
 
 Response:
 
@@ -278,13 +405,25 @@ Response:
 
 **GET /live/sessions**
 
-- "/live" react route
 - Get data on each session for the current race weekend
 
 Parameters:
 
-- User clicks on the current session to populate the data
-- If the session has yet to happen, details on the start time will be provided
+- session_key
+
+Status Codes:
+
+- 200 OK: Session data successfully retrieved.
+- 500 Internal Server Error: Server error.
+
+Request:
+
+```
+{
+  "session_key": 9140
+}
+
+```
 
 Response:
 
@@ -310,13 +449,25 @@ Response:
 
 **GET /live/weather**
 
-- "/live" react route
 - Get data on the weather at each point in the current session
 
 Parameters:
 
-- User clicks on the current session to populate the data
-- Data refreshes every few seconds
+- session_key
+
+Status Codes:
+
+- 200 OK: Weather data successfully retrieved.
+- 500 Internal Server Error: Server error.
+
+Request:
+
+```
+{
+  "session_key": 9078
+}
+
+```
 
 Response:
 
@@ -339,13 +490,16 @@ Response:
 
 **GET /stats/standings**
 
-- "/stats" react route
 - Get data on the standings for the current season
 
 Parameters:
 
-- Data will populate if the standings have been selected to show on the profile page
-- Data will populate when the This Year Page has been rendered
+- None
+
+Status Codes:
+
+- 200 OK: Standings data successfully retrieved.
+- 500 Internal Server Error: Server error.
 
 Response:
 
@@ -390,13 +544,17 @@ Response:
 
 **GET /stats/drivers**
 
-- "/stats" react route
 - Get data on each driver
+- Data will be cashed
 
 Parameters:
 
-- Data will populate if the Custom Search has been selected or if an Archive Card was selected to view the pre-filtered table
-- Data will populate when the the Custom Search Page has rendered
+- None
+
+Status Codes:
+
+- 200 OK: Driver data successfully retrieved.
+- 500 Internal Server Error: Server error.
 
 Response:
 
@@ -422,10 +580,16 @@ Response:
 **GET /track-maps**
 
 - Get the image of the circuit
+- Data will be cashed
 
 Parameters:
 
-- Get image when the user loads a session tracker
+- None
+
+Status Codes:
+
+- 200 OK: Track map successfully retrieved.
+- 500 Internal Server Error: Server error.
 
 Response:
 
@@ -449,7 +613,7 @@ Response:
 - JWT auth
   - API calls can only be completed once an account is created
   - Store JWT in sessionStorage, remove after 24h
-  - Add states for logged in showing different layouts of the profile page as well as the selected team theme
+  - Add states 'for logged in' showing different layouts of the profile page as well as the selected team theme
 
 ## Roadmap
 
@@ -538,6 +702,7 @@ Response:
 ## Nice-to-haves
 
 - Individual Driver tracking throughout the session
+- Individual Driver profile for each drive throughout history
 - Display each drivers exact position on track while following a session
 - Compare feature when looking at stats of teams or drivers
 - Team stats in the archive as well
@@ -548,5 +713,10 @@ Response:
 - A filter in the search that takes into account the different point system throughout the years so the user can filter drivers based on their overall performance instead of statistical averages
 - More options for the user to customize their profile layout
 - A Factory Page which focuses on teaching people about Formula 1's different technological and business components, as well as the various strategies involved with the sport
+- Give users the ability to share a graphic of interesting stats to various social media platforms
+- Enable users to add race session events to their personal calendars
+- Short-term data cashing for the live sessions
+- In-app live chat as the race session is going on
+- Season Predictor game which allows users to make predictions race by race as well as make a start of the season prediction
 
 # pitstop-capstone
