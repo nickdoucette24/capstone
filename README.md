@@ -35,7 +35,7 @@ Formula 1 has been on the rise for a few years now, yet it still lacks a simple 
 
 ### Tech Stack
 
-- React
+- React.js
 - MySQL
 - Node.js
 - Express.js
@@ -43,10 +43,13 @@ Formula 1 has been on the rise for a few years now, yet it still lacks a simple 
   - react-router-dom
   - Axios
   - Sass
-  - jsonwebtoken
 - Server libraries:
   - Knex
-  - bcrypt for password hashing
+  - jsonwebtoken
+  - bcrypt
+  - cors
+  - dotenv
+  - uuid
 
 ### APIs
 
@@ -544,5 +547,6 @@ Response:
 - Team Radio button to listen to the teams live radio when following an individual driver during a session
 - A filter in the search that takes into account the different point system throughout the years so the user can filter drivers based on their overall performance instead of statistical averages
 - More options for the user to customize their profile layout
+- A Factory Page which focuses on teaching people about Formula 1's different technological and business components, as well as the various strategies involved with the sport
 
 # pitstop-capstone
