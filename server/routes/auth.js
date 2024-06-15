@@ -10,6 +10,7 @@ const { JWT_SECRET, JWT_LONG_EXPIRY, JWT_SHORT_EXPIRY } = process.env;
 
 // Registration Configuration
 router.post("/register", async (req, res) => {
+  console.log(req.body);
   // List all required properties
   const requiredProperties = [
     "username",
@@ -46,14 +47,14 @@ router.post("/register", async (req, res) => {
     }
 
     // Generate a unique ID
-    const userId = uuidv4();
+    // const userId = uuidv4();
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Insert the new user into the database
     await knex("users").insert({
-      id: userId,
+      //   id: userId,
       username,
       first_name,
       last_name,
@@ -65,7 +66,7 @@ router.post("/register", async (req, res) => {
     // Generate the JWT for the user
     const token = jwt.sign(
       {
-        id: userId,
+        // id: userId,
         username,
         email,
       },
@@ -78,7 +79,7 @@ router.post("/register", async (req, res) => {
     // Return the token along with the success message
     return res.status(201).json({
       message: "Registration Successful",
-      id: userId,
+      //   id: userId,
       token: token,
     });
   } catch (error) {

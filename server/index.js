@@ -15,16 +15,12 @@ app.get("/", (_req, res) => {
 });
 
 // API Routes
-// Route to '/auth' path to get authentication/authorization data
 const authRoutes = require("./routes/auth");
-app.use("/auth", authRoutes);
-
-// Route to '/live' path to get live data
 const liveRoutes = require("./routes/live");
-app.use("/live", liveRoutes);
-
-// Route to '/stats' path to get current and historical stats
 const statsRoutes = require("./routes/stats");
+
+app.use("/auth", authRoutes);
+app.use("/live", liveRoutes);
 app.use("/stats", statsRoutes);
 
 // Server Initialization
