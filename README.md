@@ -511,7 +511,7 @@ Response:
 ]
 ```
 
-**GET /stats/standings**
+**GET /stats/driver-standings**
 
 - Get data on the standings for the current season
 
@@ -527,42 +527,63 @@ Status Codes:
 Response:
 
 ```
-[
-  {
-    "MRData": {
-      "StandingsTable": [
-        "season": "2008",
-        "StandingsLists": [
-          {
-            "season": "2008",
-            "round": "18",
-            "DriverStandings": [
-              {
-                "position": "1",
-                "positionText": "1",
-                "points": "98",
-                "wins": "5",
-                "Driver": {
-                  "driver_number": "44",
-                  "driver_acronyn": "HAM",
-                  "first_name": "Lewis",
-                  "last_name": "HAMILTON",
-                  "nationality": "British"
+{
+    "season": "2024",
+    "round": "9",
+    "DriverStandings": [
+        {
+            "position": "1",
+            "points": "194",
+            "wins": "6",
+            "Driver": {
+                "first_name": "Max",
+                "last_name": "Verstappen",
+                "dob": "1997-09-30",
+                "nationality": "Dutch"
+            },
+            "Constructors": [
+                {
+                    "name": "Red Bull"
                 }
-                "Constructors": [
-                  {
-                    "team_name": "McLaren",
-                  }
-                ]
-              }
             ]
-          }
-        ]
-      ]
-    }
-  },
-  ...
-]
+        },
+        ...
+    ]
+}
+```
+
+**GET /stats/constructor-standings**
+
+- Get data on the constructor standings for the current season
+
+Parameters:
+
+- None
+
+Status Codes:
+
+- 200 OK: Standings data successfully retrieved.
+- 500 Internal Server Error: Server error.
+
+Response:
+
+```
+{
+  "season": "2024",
+  "round": "9",
+  "ConstructorStandings": [
+    {
+      "position": "1",
+      "points": "301",
+      "wins": "6",
+      "Constructor": {
+        "name": "Red Bull",
+        "nationality": "Austrian",
+      },
+    },
+    ...
+  ]
+}
 ```
 
 **GET /stats/drivers**
