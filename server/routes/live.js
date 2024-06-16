@@ -52,9 +52,9 @@ router.get("/drivers", async (_req, res) => {
 });
 
 // Route to get Car Data
-router.post("/car-data", async (req, res) => {
+router.get("/car-data", async (req, res) => {
   // Pull params from request body
-  const { driver_number, session_key } = req.body;
+  const { driver_number, session_key } = req.query;
 
   // Validate that the Driver Number and Session Key are in the Request Body
   if (!driver_number || !session_key) {
@@ -93,9 +93,9 @@ router.post("/car-data", async (req, res) => {
 });
 
 // Route to get live car intervals
-router.post("/intervals", async (req, res) => {
+router.get("/intervals", async (req, res) => {
   // Pull params from request body
-  const { driver_number, session_key } = req.body;
+  const { driver_number, session_key } = req.query;
 
   // Validate that the Driver Number and Session Key are in the Request Body
   if (!driver_number || !session_key) {
@@ -121,19 +121,19 @@ router.post("/intervals", async (req, res) => {
 });
 
 // Route to get Race Details
-router.post("/race-details", async (req, res) => {
+router.get("/race-details", async (req, res) => {
   // Pull params from request body
-  const { meeting_name, year } = req.body;
+  const { meeting_key } = req.query;
 
-  // Validate that the Meeting Name and Year are in the Request Body
-  if (!meeting_name || !year) {
-    return res.status(400).json("Bad Request: Meeting Name and Year Required");
+  // Validate that the Meeting Key is in the Request Body
+  if (!meeting_key) {
+    return res.status(400).json("Bad Request: Meeting Key Required");
   }
 
   try {
     // Make a GET request to the OpenF1 API
     const response = await axios.get(
-      `${liveUrl}/meetings?year=${year}&meeting_name=${meeting_name}`
+      `${liveUrl}/meetings?meeting_key=${meeting_key}`
     );
     const race = response.data;
 
@@ -159,19 +159,19 @@ router.post("/race-details", async (req, res) => {
 });
 
 // Route to get Session Details
-router.post("/session-details", async (req, res) => {
+router.get("/session-details", async (req, res) => {
   // Pull params from request body
-  const { circuit_short_name, session_name, session_type } = req.body;
+  const { session_key } = req.query;
 
-  // Validate that the correct params are in the Request Body
-  if (!circuit_short_name || !session_name || !session_type) {
-    return res.status(400).json("Bad Request: Multiple Parameters Required");
+  // Validate that the Session Key in the Request Body
+  if (!session_key) {
+    return res.status(400).json("Bad Request: Session Key Required");
   }
 
   try {
     // Make a GET request to the OpenF1 API
     const response = await axios.get(
-      `${liveUrl}/sessions?circuit_short_name=${circuit_short_name}&session_name=${session_name}&session_type=${session_type}`
+      `${liveUrl}/sessions?session_key=${session_key}`
     );
     const raceDetails = response.data;
 
@@ -185,9 +185,9 @@ router.post("/session-details", async (req, res) => {
 });
 
 // Route to get Pitstop Data
-router.post("/pitstops", async (req, res) => {
+router.get("/pitstops", async (req, res) => {
   // Pull params from request body
-  const { session_key, driver_number } = req.body;
+  const { session_key, driver_number } = req.query;
 
   // Validate that the Driver Number and Session Key are in the Request Body
   if (!session_key || !driver_number) {
@@ -213,9 +213,9 @@ router.post("/pitstops", async (req, res) => {
 });
 
 // Route to get Position Data
-router.post("/positions", async (req, res) => {
+router.get("/positions", async (req, res) => {
   // Pull params from request body
-  const { session_key, driver_number } = req.body;
+  const { session_key, driver_number } = req.query;
 
   // Validate that the Driver Number and Session Key are in the Request Body
   if (!session_key || !driver_number) {
@@ -247,9 +247,9 @@ router.post("/positions", async (req, res) => {
 });
 
 // Route to get live Weather Updates
-router.post("/weather", async (req, res) => {
+router.get("/weather", async (req, res) => {
   // Pull params from request body
-  const { session_key } = req.body;
+  const { session_key } = req.query;
 
   // Validate that the Session Key is in the Request Body
   if (!session_key) {

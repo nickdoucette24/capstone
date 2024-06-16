@@ -122,7 +122,7 @@ Formula 1 has been on the rise for a few years now, yet it still lacks a straigh
 
 Parameters:
 
-- email or username
+- email or username (unique identifier)
 - password
 
 Status Codes:
@@ -145,7 +145,8 @@ Response:
 ```
 {
   "message": "User logged in successfully.",
-  "token": "example-jwt-token"
+  "id": 2
+  "token": "example-jwt"
 }
 ```
 
@@ -188,7 +189,7 @@ Response:
 ```
 {
   "message": "User registered successfully.",
-  "userId": 1
+  "token": "example-jwt"
 }
 ```
 
@@ -229,12 +230,22 @@ Response:
 
 Parameters:
 
-- None
+- Session Key
+- Driver Number
 
 Status Codes:
 
 - 200 OK: Car data successfully retrieved.
 - 500 Internal Server Error: Server error.
+
+Request:
+
+```
+{
+  "session_key": 9159,
+  "driver_number": 55
+}
+```
 
 Response:
 
@@ -261,12 +272,22 @@ Response:
 
 Parameters:
 
-- None
+- Session Key
+- Driver Number
 
 Status Codes:
 
 - 200 OK: Interval data successfully retrieved.
 - 500 Internal Server Error: Server error.
+
+Request:
+
+```
+{
+  "session_key": 9165,
+  "driver_number": 1
+}
+```
 
 Response:
 
@@ -290,7 +311,7 @@ Response:
 
 Parameters:
 
-- meeting_key
+- Meeting Key
 
 Status Codes:
 
@@ -330,8 +351,8 @@ Response:
 
 Parameters:
 
-- meeting_key
-- session_key
+- Session Key
+- Driver Number
 
 Status Codes:
 
@@ -342,7 +363,7 @@ Request:
 
 ```
 {
-  "meeting_key": 1219,
+  "driver_number": 63,
   "session_key": 9158
 }
 
@@ -372,7 +393,8 @@ Response:
 
 Parameters:
 
-- session_key
+- Session Key
+- Driver Number
 
 Status Codes:
 
@@ -383,7 +405,8 @@ Request:
 
 ```
 {
-  "session_key": 9144
+  "session_key": 9144,
+  "driver_number": 40
 }
 
 ```
@@ -409,7 +432,7 @@ Response:
 
 Parameters:
 
-- session_key
+- Session Key
 
 Status Codes:
 
@@ -718,5 +741,6 @@ Response:
 - Short-term data cashing for the live sessions
 - In-app live chat as the race session is going on
 - Season Predictor game which allows users to make predictions race by race as well as make a start of the season prediction
+- Bars to show the speed of each sector for every lap. These bars will be colour coordinated by yellow, green, and purple just like real life and will update live for each driver throughout the race
 
 # pitstop-capstone
