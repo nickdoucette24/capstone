@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const axios = require("axios");
+require("dotenv").config();
 
-// API Urls
+const { API_F1_KEY } = process.env;
+
+// API Url
 const ergastUrl = "http://ergast.com/api/f1";
-const f1MotorsportUrl = "";
-const apiF1Url = "";
 
 // Route for Current Driver Standings
 router.get("/driver-standings", async (_req, res) => {
@@ -18,8 +19,8 @@ router.get("/driver-standings", async (_req, res) => {
     const standingsList =
       driverStandingsData.MRData.StandingsTable.StandingsLists[0];
 
-    // Transform the response to the desired format
-    const transformedData = {
+    // Format the response
+    const formattedData = {
       season: standingsList.season,
       round: standingsList.round,
       DriverStandings: standingsList.DriverStandings.map((driverStanding) => ({
@@ -38,7 +39,7 @@ router.get("/driver-standings", async (_req, res) => {
       })),
     };
 
-    return res.status(200).json(transformedData);
+    return res.status(200).json(formattedData);
   } catch (error) {
     console.error("Error getting Driver Standings: ", error);
     res.status(500).json({
@@ -59,8 +60,8 @@ router.get("/constructor-standings", async (_req, res) => {
     const standingsList =
       constructorStandingsData.MRData.StandingsTable.StandingsLists[0];
 
-    // Transform the response to the desired format
-    const transformedData = {
+    // Format the response
+    const formattedData = {
       season: standingsList.season,
       round: standingsList.round,
       ConstructorStandings: standingsList.ConstructorStandings.map(
@@ -76,7 +77,47 @@ router.get("/constructor-standings", async (_req, res) => {
       ),
     };
 
-    return res.status(200).json(transformedData);
+    return res.status(200).json(formattedData);
+  } catch (error) {
+    console.error("Error getting Driver Standings: ", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
+// Route to get Track Maps
+router.get("/track-maps", async (req, res) => {
+  const { track_id } = req.query;
+
+  // API Request Bundle
+  const requestBundle = {
+    method: "GET",
+    url: "https://api-formula-1.p.rapidapi.com/circuits",
+    params: { id: track_id },
+    headers: {
+      "x-rapidapi-key": API_F1_KEY,
+      "x-rapidapi-host": "api-formula-1.p.rapidapi.com",
+    },
+  };
+
+  try {
+    // Make get request to API-FORMULA-1 in order to get track maps and track details
+    const response = await axios.request(requestBundle);
+    const trackMaps = response.data.response;
+
+    // Format the response
+    const formattedTrackMaps = trackMaps.map((track) => ({
+      id: track.id,
+      name: track.name,
+      image: track.image,
+      competition: {
+        id: track.competition.id,
+        name: track.competition.name,
+      },
+    }));
+
+    return res.status(200).json(formattedTrackMaps);
   } catch (error) {
     console.error("Error getting Driver Standings: ", error);
     res.status(500).json({
@@ -86,12 +127,3 @@ router.get("/constructor-standings", async (_req, res) => {
 });
 
 module.exports = router;
-
-// try {
-
-// } catch (error) {
-//     console.error("Error getting Driver Standings: ", error);
-//     res.status(500).json(({
-//         message: "Internal Server Error"
-//     }));
-// }

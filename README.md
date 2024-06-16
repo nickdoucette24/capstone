@@ -4,7 +4,7 @@ pitstop
 
 ## Overview
 
-'pitstop' is a comprehensive dive into the world and stats of Formula 1. Users will be able to customize a Profile Page exactly to their liking. Predefined slots will be available, allowing users to select precisely which stats or trackers they want to see displayed on their profile. Users can choose a favourite team, changing the entire theme of the website to match that team's colours. In addition to customization, users can follow the current season by viewing each race weekend's results and using a live session tracker to view stats that are typically unavailable when streaming live. The Archive Page allows users to interact with data throughout the history of the sport, containing rankings in main statistical categories and enabling custom filtered searches to view specific statistical rankings.
+'pitstop' is a comprehensive dive into the world and stats of Formula 1. Users will be able to customize a Profile Page exactly to their liking. Predefined slots will be available, allowing users to select precisely which stats or trackers they want to see displayed on their profile. Users can choose a favourite team, changing the entire theme of the website to match that team's colours. In addition to customization, users can follow the current season by viewing each race weekend's results and using a live session tracker to view stats that are typically unavailable when streaming live.
 
 ### Problem
 
@@ -15,7 +15,6 @@ Formula 1 has been on the rise for a few years now, yet it still lacks a straigh
 - Formula 1 Fans:
   - Who have an interest in learning more
   - Who want to see more live stats when watching a race
-  - Who want to dive into the statistical history of the sport
   - Who want a reliable site which allows them to follow the sport
   - Who like the idea of having a profile with custom data tracking, as well as a custom theme.
 
@@ -25,8 +24,8 @@ Formula 1 has been on the rise for a few years now, yet it still lacks a straigh
 - As a user, I want to be able to customize what I see on my profile page
 - As a user, I want to be able to follow a race weekend live during all the sessions
 - As a user, I want to be able to pick a team and have it's theme applied to the website
-- As a user, I want to be able to view a list of all drivers and sort by various stats
-- As a user, I want to be able to view a list of all teams and sort by various stats
+- As a user, I want to be able to view a list of all current drivers and sort by various stats
+- As a user, I want to be able to view a list of all current teams and sort by various stats
 - As a user, I want to be able to see the race details each weekend (e.g. tire allocation, track temperatures, weather predictions, etc.)
 - As a user, I want to be able to follow a race session live while also seeing stats that the broadcast doesn't show
 - As a user, I want to be able to follow the current season race by race and see how the championships have progressed over time
@@ -78,11 +77,6 @@ Formula 1 has been on the rise for a few years now, yet it still lacks a straigh
   - Trackers and data for current race weekend
   - Graphic of the current race track
   - All Sessions will have their own view so you can follow practice, qualifying, and the race
-- Archive
-  - Cards showing the top 3 drivers in chosen main statistical category
-  - Each card links to sorted table of all driver stats with the required sort already applied
-- Custom Search
-  - Table of all the stats which can be filtered to the user's liking
 
 ## Mockups
 
@@ -101,14 +95,6 @@ Formula 1 has been on the rise for a few years now, yet it still lacks a straigh
 ### Race Weekend Page
 
 ![Hand drawn image of the Race Weekend Page](./client/src/assets/images/mockups/race-weekend-page.png)
-
-### Archive Page
-
-![Hand drawn image of the Archive Page](./client/src/assets/images/mockups/archive-page.png)
-
-### Custom Search Page
-
-![Hand drawn image of the Custom Search Page](./client/src/assets/images/mockups/custom-search-page.png)
 
 ### Data
 
@@ -154,7 +140,7 @@ Response:
 
 - Route to register a new user
 - Passwords will be hashed for data security
-- Data will be cashed
+- Data will be cached
 
 Parameters:
 
@@ -196,6 +182,7 @@ Response:
 **GET /live/drivers**
 
 - Get list of drivers currently on track
+- Data will be cached
 
 Parameters:
 
@@ -308,6 +295,7 @@ Response:
 **GET /live/race-details**
 
 - Get details about each race
+- Data will be cached
 
 Parameters:
 
@@ -388,7 +376,6 @@ Response:
 
 **GET /live/positions**
 
-- "/live" react route
 - Get data on each driver's position
 
 Parameters:
@@ -514,6 +501,7 @@ Response:
 **GET /stats/driver-standings**
 
 - Get data on the standings for the current season
+- Data will be cached
 
 Parameters:
 
@@ -555,6 +543,7 @@ Response:
 **GET /stats/constructor-standings**
 
 - Get data on the constructor standings for the current season
+- Data will be cached
 
 Parameters:
 
@@ -586,54 +575,27 @@ Response:
 }
 ```
 
-**GET /stats/drivers**
-
-- Get data on each driver
-- Data will be cashed
-
-Parameters:
-
-- None
-
-Status Codes:
-
-- 200 OK: Driver data successfully retrieved.
-- 500 Internal Server Error: Server error.
-
-Response:
-
-```
-[
-  {
-    "driver_id": 20
-    "driver_name": "Lewis Hamilton"
-    "driver_acronym": "HAM"
-    "image": "https://media.api-sports.io/formula-1/drivers/20.png"
-    "nationality": "British"
-    "number": 44
-    "races": 340
-    "titles": 7
-    "podiums": 197
-    "wins": 103
-    "career_points": 4681.5
-  },
-  ...
-]
-```
-
 **GET /track-maps**
 
 - Get the image of the circuit
-- Data will be cashed
+- Data will be cached
 
 Parameters:
 
-- None
+- Track ID
 
 Status Codes:
 
 - 200 OK: Track map successfully retrieved.
 - 500 Internal Server Error: Server error.
+
+Request:
+
+```
+{
+  "track_id": 1,
+}
+```
 
 Response:
 
@@ -647,8 +609,7 @@ Response:
       "id": 1,
       "name": Australian Grand Prix
     ]
-  },
-  ...
+  }
 ]
 ```
 
@@ -694,8 +655,6 @@ Response:
   - Profile Page
   - This Year Page
   - Race Weekend Page
-  - Archive Page
-  - Custom Search Page
   - Implement Mobile-First design philosophy
   - Create theme switcher for team customization
 
@@ -718,12 +677,6 @@ Response:
   - Live Session Tracker
     - Implement live session tracker to follow race live and see additional stats that the broadcast usually doesn't show
     - Update data every 4 seconds using OpenF1 API
-  - Historical Data Archive
-    - Implement Archive Page
-    - Display cards showing the top 3 drivers in main statistical categories
-    - Cards link to sorted tables of all driver stats
-    - Implement Custom Search Page
-    - Allow filtering of stats to user’s preference
   - API Integration
     - Integrate OpenF1 for live data (updated every 4s)
     - Integrate Ergast and RapidAPI for historical and statistical data
@@ -751,7 +704,8 @@ Response:
 - Compare feature when looking at stats of teams or drivers
 - Team stats in the archive as well
 - A recent news section showing articles from around the web
-- Archive will show full standings and championship tracker for each past season
+- An Archive Page which will show full standings and championship tracker for each past season along with allowing the user to filter the data table by each individual stat
+- A Custom Search Page which will allow users to apply parameters to a search and have it return a table consisting of each driver/team that fit the criteria
 - A polished F1 Fantasy league would be a massive task but would add tons of value to the site
 - Team Radio button to listen to the teams live radio when following an individual driver during a session
 - A filter in the search that takes into account the different point system throughout the years so the user can filter drivers based on their overall performance instead of statistical averages
