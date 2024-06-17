@@ -457,6 +457,46 @@ Response:
 ]
 ```
 
+**GET /live/stints**
+
+- Get data on the driver's current tyre, tyre age, and how old the tyres were at the start of the stint
+
+Parameters:
+
+- Session Key
+- Driver Number
+
+Status Codes:
+
+- 200 OK: Tyre data successfully retrieved.
+- 500 Internal Server Error: Server error.
+
+Request:
+
+```
+{
+  "session_key": 9165,
+  "driver_number": 16
+}
+```
+
+Response:
+
+```
+[
+  {
+    "compound": "SOFT",
+    "driver_number": 16,
+    "lap_end": 20,
+    "lap_start": 1,
+    "meeting_key": 1219,
+    "session_key": 9165,
+    "stint_number": 1,
+    "tyre_age_at_start": 3
+  }
+]
+```
+
 **GET /live/weather**
 
 - Get data on the weather at each point in the current session
@@ -717,5 +757,6 @@ Response:
 - In-app live chat as the race session is going on
 - Season Predictor game which allows users to make predictions race by race as well as make a start of the season prediction
 - Bars to show the speed of each sector for every lap. These bars will be colour coordinated by yellow, green, and purple just like real life and will update live for each driver throughout the race
+- OAuth
 
 # pitstop-capstone

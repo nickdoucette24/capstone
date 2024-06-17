@@ -257,6 +257,7 @@ router.get("/weather", async (req, res) => {
   }
 
   try {
+    // GET request to the OpenF1 API
     const response = await axios.get(
       `${liveUrl}/weather?session_key=${session_key}`
     );
@@ -271,6 +272,39 @@ router.get("/weather", async (req, res) => {
     return res.status(200).json(mostRecentWeatherUpdate);
   } catch (error) {
     console.error("Unable to get weather data: ", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
+// Route to get live Tyre Data
+router.get("/stints", async (req, res) => {
+  // Pull params from request body
+  const { session_key, driver_number } = req.query;
+
+  // Validate that the Session Key and Driver Number are in the Request Body
+  if (!session_key || !driver_number) {
+    return res
+      .status(400)
+      .json("Bad Request: Session Key and Driver Number Required");
+  }
+
+  try {
+    // GET request to the OpenF1 API
+    const response = await axios.get(
+      `${liveUrl}/stints?session_key=${session_key}&driver_number=${driver_number}`
+    );
+    const stintsData = response.data;
+
+    // Sort the array by date in ascending order and return all the stints
+    const sortedStints = stintsData.sort(
+      (a, b) => a.stint_number - b.stint_number
+    );
+
+    return res.status(200).json(sortedStints);
+  } catch (error) {
+    console.error("Unable to get tyre data: ", error);
     return res.status(500).json({
       message: "Internal Server Error",
     });
