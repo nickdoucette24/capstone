@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MainHeader from "./components/MainHeader/MainHeader";
-import WelcomeHeader from "./components/WelcomeHeader/WelcomeHeader";
+import Header from "./components/Header/Header";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import RaceWeekendPage from "./pages/RaceWeekendPage/RaceWeekendPage";
@@ -15,7 +14,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {loggedIn ? <MainHeader /> : <WelcomeHeader />}
+      <Header />
       <Routes>
         <Route path="/" element={<WelcomePage />} />
         {loggedIn && (

@@ -1,0 +1,38 @@
+@use "../../styles/global/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+
+// Global Header Styling
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $off-white;
+  border-bottom: 2px solid $pitstop-red;
+
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.nav-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__logo {
+    width: 10rem;
+    margin: 1rem;
+  }
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+}
+
+.auth-container {
+  display: flex;
+}

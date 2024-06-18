@@ -1,0 +1,14 @@
+@use "./variables" as *;
+
+// Media Queries
+@mixin tablet {
+  @media (min-width: $tablet-breakpoint) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (min-width: $tablet-breakpoint) {
+    @content;
+  }
+}
