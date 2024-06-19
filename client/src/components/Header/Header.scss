@@ -38,9 +38,19 @@
   &__logo {
     height: 3.5rem;
     margin: 1rem;
+    cursor: pointer;
 
     @include tablet {
       margin: 1rem 2.5rem;
+      transition: transform 0.1s ease-in-out;
+
+      &:hover {
+        transform: scale(1.03);
+      }
+
+      &:active {
+        transform: scale(1);
+      }
     }
   }
 

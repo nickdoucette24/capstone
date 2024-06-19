@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./Header.scss";
 import SideMenu from "../SideMenu/SideMenu";
@@ -8,6 +8,7 @@ import menuIcon from "../../assets/images/icons/menu-icon.svg";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -21,6 +22,10 @@ const Header = () => {
     if (window.innerWidth > 768) {
       handleClose();
     }
+  };
+
+  const handleNavigateHome = () => {
+    navigate("/");
   };
 
   useEffect(() => {
@@ -38,13 +43,16 @@ const Header = () => {
             <img
               className="nav-container__logo"
               src={pitstopLogo}
+              onClick={handleNavigateHome}
               alt="pistop main logo with subtext 'formula 1 live'"
             />
             <div className="nav-bar">
-              <Link className="nav-bar__link" href>
+              <Link to={"/race-weekend"} className="nav-bar__link" href>
                 Race Weekend
               </Link>
-              <Link className="nav-bar__link">This Year</Link>
+              <Link to={"/this-year"} className="nav-bar__link">
+                This Year
+              </Link>
             </div>
           </nav>
           <div className="auth-container">
