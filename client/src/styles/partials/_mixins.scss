@@ -12,3 +12,26 @@
     @content;
   }
 }
+
+// Buttons
+@mixin nav-link {
+  padding: 0.5rem 1rem;
+  background-color: $pitstop-lightBlue;
+  color: $white;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+
+  &:active {
+    box-shadow: none;
+    background-color: $pitstop-activeLightBlue;
+  }
+}
+
+@mixin auth-button {
+  @include nav-link;
+  border: none;
+}

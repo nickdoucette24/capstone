@@ -7,13 +7,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: $off-white;
-  border-bottom: 2px solid $pitstop-red;
+  background-color: $white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 5;
+}
 
-  &-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+
+  @include tablet {
+    width: 100%;
+  }
+
+  @include laptop {
+    max-width: 63.75rem;
   }
 }
 
@@ -22,17 +31,61 @@
   flex-direction: column;
   align-items: center;
 
+  @include tablet {
+    flex-direction: row;
+  }
+
   &__logo {
-    width: 10rem;
+    height: 3.5rem;
     margin: 1rem;
+
+    @include tablet {
+      margin: 1rem 2.5rem;
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    width: 2rem;
+    transition: transform 0.3s ease;
+
+    @include tablet {
+      display: none;
+    }
+
+    &:active {
+      transform: scale(0.8);
+    }
   }
 }
 
 .nav-bar {
-  display: flex;
+  display: none;
   align-items: center;
+
+  @include tablet {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  &__link {
+    @include nav-link;
+  }
 }
 
 .auth-container {
-  display: flex;
+  display: none;
+  align-items: center;
+
+  @include tablet {
+    display: flex;
+    margin: 1rem 2.5rem;
+    gap: 0.5rem;
+  }
+
+  &__button {
+    @include auth-button;
+  }
 }
