@@ -8,7 +8,7 @@
 }
 
 @mixin laptop {
-  @media (min-width: $tablet-breakpoint) {
+  @media (min-width: $laptop-breakpoint) {
     @content;
   }
 }
@@ -39,4 +39,11 @@
   @include nav-link;
   border: none;
   cursor: pointer;
+}
+
+// Flexbox mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

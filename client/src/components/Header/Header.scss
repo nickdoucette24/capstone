@@ -19,6 +19,7 @@
 
   @include tablet {
     width: 100%;
+    max-width: 68.75rem;
   }
 
   @include laptop {
@@ -51,6 +52,10 @@
       &:active {
         transform: scale(1);
       }
+    }
+
+    @include laptop {
+      margin-left: 0;
     }
   }
 
@@ -94,6 +99,10 @@
     display: flex;
     margin: 1rem 2.5rem;
     gap: 0.5rem;
+  }
+
+  @include laptop {
+    margin-right: 0;
   }
 
   &__button {

@@ -1,0 +1,162 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/global/global" as *;
+
+// Section Styling
+.landing-page {
+  @include flex-center;
+
+  &__container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+// Hero Styling
+.hero-container {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+
+  @include laptop {
+    background-color: $pitstop-hero;
+    box-shadow: none;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 63.75rem;
+    margin-top: 5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  &__description {
+    width: 100%;
+
+    @include tablet {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @include laptop {
+      width: 30rem;
+    }
+  }
+
+  &__heading {
+    padding: 5rem 1rem;
+    background-color: $pitstop-hero;
+    margin: 0;
+    color: $pitstop-yellow;
+    line-height: 3rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    @include tablet {
+      padding: 8rem 0;
+      width: 100%;
+    }
+
+    @include laptop {
+      box-shadow: none;
+      padding: 0;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    max-width: 43rem;
+    border-radius: 8px;
+
+    @include laptop {
+      width: 32rem;
+    }
+  }
+}
+
+.hero-list {
+  list-style-type: circle;
+  padding: 0 1rem 0 2rem;
+  margin: 1rem 0 2rem 0;
+
+  @include tablet {
+    padding: 0 2.25rem 0 3.25rem;
+  }
+
+  @include laptop {
+    padding-right: 0;
+    margin-bottom: 0;
+  }
+
+  &__heading {
+    text-align: center;
+    margin: 2rem 0;
+
+    @include laptop {
+      margin-top: 0;
+      color: $white;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__item {
+    margin: 1rem 0;
+
+    @include laptop {
+      color: $white;
+      margin: 1.25rem 0 0 0;
+    }
+
+    &--bold {
+      color: $pitstop-red;
+    }
+
+    &--link {
+      text-decoration: none;
+      font-weight: 600;
+      color: $pitstop-hoverLightBlue;
+      transition: color 0.2s ease;
+
+      @include laptop {
+        color: $pitstop-yellow;
+      }
+
+      &:hover {
+        color: $pitstop-red;
+      }
+    }
+  }
+}
+
+.hero-wrapper {
+  @include laptop {
+    width: 100%;
+    background-color: $pitstop-hero;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    @include flex-center;
+  }
+}
+
+.image-container {
+  padding: 0 1rem;
+
+  @include tablet {
+    padding: 0 2.25rem;
+  }
+
+  @include laptop {
+    padding: 0;
+  }
+}
+
+.content-container {
+  @include tablet {
+    max-width: 63.75rem;
+    display: flex;
+    flex-direction: column;
+  }
+}

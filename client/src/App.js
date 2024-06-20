@@ -20,13 +20,10 @@ function App() {
         {loggedIn && (
           <>
             <Route path="/home/:username" element={<ProfilePage />} />
-            <Route
-              path="/race-weekend/:raceName"
-              element={<RaceWeekendPage />}
-            />
-            <Route path="/this-year" element={<ThisYearPage />} />
           </>
         )}
+        <Route path="/race-weekend" element={<RaceWeekendPage />} />
+        <Route path="/this-year" element={<ThisYearPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
