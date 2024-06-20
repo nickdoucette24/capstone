@@ -46,6 +46,7 @@
     font-weight: 500;
     transition: background-color 0.2s ease-in-out, padding 0.2s;
     color: $grey;
+    cursor: pointer;
 
     &:active {
       background-color: $grey;
