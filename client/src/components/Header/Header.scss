@@ -1,0 +1,102 @@
+@use "../../styles/global/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+
+// Global Header Styling
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 5;
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+
+  @include tablet {
+    width: 100%;
+  }
+
+  @include laptop {
+    max-width: 63.75rem;
+  }
+}
+
+.nav-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @include tablet {
+    flex-direction: row;
+  }
+
+  &__logo {
+    height: 3.5rem;
+    margin: 1rem;
+    cursor: pointer;
+
+    @include tablet {
+      margin: 1rem 2.5rem;
+      transition: transform 0.1s ease-in-out;
+
+      &:hover {
+        transform: scale(1.03);
+      }
+
+      &:active {
+        transform: scale(1);
+      }
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    width: 2rem;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+
+    @include tablet {
+      display: none;
+    }
+
+    &:active {
+      transform: scale(0.8);
+    }
+  }
+}
+
+.nav-bar {
+  display: none;
+  align-items: center;
+
+  @include tablet {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  &__link {
+    @include nav-link;
+  }
+}
+
+.auth-container {
+  display: none;
+  align-items: center;
+
+  @include tablet {
+    display: flex;
+    margin: 1rem 2.5rem;
+    gap: 0.5rem;
+  }
+
+  &__button {
+    @include auth-button;
+  }
+}

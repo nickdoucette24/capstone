@@ -1,30 +1,32 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
-
-import MainHeader from "./components/MainHeader/MainHeader";
-import WelcomeHeader from "./components/WelcomeHeader/WelcomeHeader";
+import Header from "./components/Header/Header";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import RaceWeekendPage from "./pages/RaceWeekendPage/RaceWeekendPage";
 import ThisYearPage from "./pages/ThisYearPage/ThisYearPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import useAuth from "./hooks/useAuth";
 import "./App.scss";
 
+// Main App Component
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  // useEffect(() => {
-  //   // Check Session Storage to see if the use is logged in
-  // }, []);
+  const loggedIn = useAuth();
 
   return (
     <BrowserRouter>
-      {loggedIn ? <ProfilePage /> : <WelcomeHeader />}
+      <Header />
       <Routes>
         <Route path="/" element={<WelcomePage />} />
-        <Route path="/home/:username" element={<ProfilePage />} />
-        <Route path="/race-weekend/:raceName" element={<RaceWeekendPage />} />
-        <Route path="/this-year" element={<ThisYearPage />} />
+        {loggedIn && (
+          <>
+            <Route path="/home/:username" element={<ProfilePage />} />
+            <Route
+              path="/race-weekend/:raceName"
+              element={<RaceWeekendPage />}
+            />
+            <Route path="/this-year" element={<ThisYearPage />} />
+          </>
+        )}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
