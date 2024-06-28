@@ -47,3 +47,19 @@
   justify-content: center;
   align-items: center;
 }
+
+// Form Mixins
+@mixin form-labels {
+  font-size: 1rem;
+  padding: 1.5rem 0 0.25rem 0;
+  font-weight: 500;
+}
+
+@mixin form-fields {
+  border-radius: 0.3rem;
+  border: 1px solid $grey;
+  outline: none;
+  padding: 0.5rem;
+  width: 100%;
+  max-width: 19.25rem;
+}

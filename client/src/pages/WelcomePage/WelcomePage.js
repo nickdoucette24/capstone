@@ -64,7 +64,7 @@ const WelcomePage = () => {
         </div>
         <div className="register-container">
           <h4 className="register-container__heading">Create an account</h4>
-          <div className="register-form__container">
+          <div className="register-form__section">
             <NewUserForm />
           </div>
         </div>

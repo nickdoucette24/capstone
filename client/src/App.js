@@ -19,7 +19,7 @@ function App() {
         <Route path="/" element={<WelcomePage />} />
         {loggedIn && (
           <>
-            <Route path="/home/:username" element={<ProfilePage />} />
+            <Route path="/home/:username/:id" element={<ProfilePage />} />
           </>
         )}
         <Route path="/race-weekend" element={<RaceWeekendPage />} />

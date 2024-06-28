@@ -1,0 +1,44 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/global/global" as *;
+
+//
+
+.register-form__wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.register-form__inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &--group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.register-form__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.register-form__label {
+  @include form-labels;
+}
+
+.register-form__field {
+  @include form-fields;
+}
+
+.register-form__divider {
+  border: none;
+  border-bottom: 2px solid $grey;
+  border-radius: 1rem;
+  width: 100%;
+}

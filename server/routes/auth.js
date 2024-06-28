@@ -10,7 +10,6 @@ const { JWT_SECRET, JWT_LONG_EXPIRY, JWT_SHORT_EXPIRY } = process.env;
 
 // Registration Configuration
 router.post("/register", async (req, res) => {
-  console.log(req.body);
   // List all required properties
   const requiredProperties = [
     "username",
@@ -73,13 +72,15 @@ router.post("/register", async (req, res) => {
 
     // Return the token along with the success message
     return res.status(201).json({
-      message: "Registration Successful",
+      message: "Registration Successful!",
+      success: true,
       token: token,
     });
   } catch (error) {
-    console.error("Unable to Register: ", error);
+    console.error("Unable to Register User: ", error);
     return res.status(500).json({
       message: "Internal Server Error",
+      success: false,
     });
   }
 });
