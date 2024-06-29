@@ -60,6 +60,25 @@
   border: 1px solid $grey;
   outline: none;
   padding: 0.5rem;
-  width: 100%;
-  max-width: 19.25rem;
+  line-height: 1rem;
+  font-size: 0.9rem;
+  color: $pitstop-darkBlue;
+  font-weight: light;
+  font-family: Raleway;
+
+  &:hover {
+    border: 1px solid $pitstop-hoverLightBlue;
+  }
+
+  &:focus {
+    border: 1px solid $pitstop-activeLightBlue;
+    background-color: $field-background;
+  }
+
+  &::placeholder {
+    color: $placeholder-grey;
+    font-family: Raleway;
+    font-weight: 100;
+    font-size: 0.9rem;
+  }
 }

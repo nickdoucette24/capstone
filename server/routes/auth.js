@@ -49,14 +49,16 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Insert the new user into the database
-    await knex("users").insert({
-      username,
-      first_name,
-      last_name,
-      email,
-      password_hash: hashedPassword,
-      team_id,
-    });
+    const [userId] = await knex("users")
+      .insert({
+        username,
+        first_name,
+        last_name,
+        email,
+        password_hash: hashedPassword,
+        team_id,
+      })
+      .then(([id]) => [id]);
 
     // Generate the JWT for the user
     const token = jwt.sign(
@@ -75,6 +77,8 @@ router.post("/register", async (req, res) => {
       message: "Registration Successful!",
       success: true,
       token: token,
+      username: username,
+      id: userId,
     });
   } catch (error) {
     console.error("Unable to Register User: ", error);

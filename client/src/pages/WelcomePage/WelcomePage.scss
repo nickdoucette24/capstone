@@ -167,7 +167,7 @@
   flex-direction: column;
   align-items: center;
   margin: 2.5rem 1rem;
-  padding: 1.5rem 0;
+  padding: 2rem 2.25rem;
   border-radius: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
@@ -179,5 +179,5 @@
 
 .register-form__section {
   @include flex-center;
-  width: 80%;
+  width: 100%;
 }

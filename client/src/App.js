@@ -17,10 +17,12 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<WelcomePage />} />
-        {loggedIn && (
+        {loggedIn ? (
           <>
             <Route path="/home/:username/:id" element={<ProfilePage />} />
           </>
+        ) : (
+          <Route path="/" element={<WelcomePage />} />
         )}
         <Route path="/race-weekend" element={<RaceWeekendPage />} />
         <Route path="/this-year" element={<ThisYearPage />} />

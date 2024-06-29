@@ -6,10 +6,11 @@ import FormErrorMessage from "../FormErrorMessage/FormErrorMessage";
 
 import "./NewUserForm.scss";
 
-const url = process.env.SERVER_BASE_URL;
+const url = process.env.REACT_APP_SERVER_URL;
 
 const NewUserForm = () => {
   const [errors, setErrors] = useState({});
+  const [selectedTeam, setSelectedTeam] = useState("");
   const [formValues, setFormValues] = useState({
     username: "",
     first_name: "",
@@ -35,16 +36,16 @@ const NewUserForm = () => {
 
   const handleClear = () => {
     setFormValues({
+      ...formValues,
       password: "",
       confirm_password: "",
     });
-    setErrors({});
   };
 
   const validate = () => {
     let formErrors = {};
 
-    if (!formValues.username) formErrors.first_name = "Username is required.";
+    if (!formValues.username) formErrors.username = "Username is required.";
     if (!formValues.first_name)
       formErrors.first_name = "First Name is required.";
     if (!formValues.last_name) formErrors.last_name = "Last Name is required.";
@@ -54,7 +55,21 @@ const NewUserForm = () => {
       formErrors.confirm_password = "Please confirm your password.";
     if (formValues.password !== formValues.confirm_password)
       formErrors.no_match = "Passwords do not match!";
+    if (!formValues.team_id)
+      formErrors.team_id = "Please select a team to join.";
     return formErrors;
+  };
+
+  const handleTeamSelect = (teamId) => {
+    setSelectedTeam(teamId);
+    setFormValues({
+      ...formValues,
+      team_id: teamId,
+    });
+    setErrors({
+      ...errors,
+      team_id: "",
+    });
   };
 
   const handleSubmit = async (event) => {
@@ -63,11 +78,10 @@ const NewUserForm = () => {
     const formErrors = validate();
     setErrors(formErrors);
 
-    const password = formValues.password;
-    const confirmedPassword = formValues.confirm_password;
-
-    if (password !== confirmedPassword) {
-      handleClear();
+    if (Object.keys(formErrors).length > 0) {
+      if (formErrors.no_match) {
+        handleClear();
+      }
       return;
     }
 
@@ -98,6 +112,19 @@ const NewUserForm = () => {
     }
   };
 
+  const teamList = [
+    { name: "alpine", id: "1" },
+    { name: "astonmartin", id: "2" },
+    { name: "ferrari", id: "3" },
+    { name: "haas", id: "4" },
+    { name: "kicksauber", id: "5" },
+    { name: "mclaren", id: "6" },
+    { name: "mercedes", id: "7" },
+    { name: "vcarb", id: "8" },
+    { name: "redbull", id: "9" },
+    { name: "williams", id: "10" },
+  ];
+
   return (
     <form className="register-form__wrapper" onSubmit={handleSubmit}>
       <div className="register-form__inputs">
@@ -122,7 +149,7 @@ const NewUserForm = () => {
             <input
               className="register-form__field"
               name="first_name"
-              placeholder="Enter your First Name"
+              placeholder="First Name"
               onChange={handleInput}
               value={formValues.first_name}
             />
@@ -137,7 +164,7 @@ const NewUserForm = () => {
             <input
               className="register-form__field"
               name="last_name"
-              placeholder="Enter your Last Name"
+              placeholder="Last Name"
               onChange={handleInput}
               value={formValues.last_name}
             />
@@ -155,6 +182,7 @@ const NewUserForm = () => {
               className="register-form__field"
               name="email"
               placeholder="Enter your Email"
+              type="email"
               onChange={handleInput}
               value={formValues.email}
             />
@@ -168,6 +196,8 @@ const NewUserForm = () => {
               className="register-form__field"
               name="password"
               placeholder="Enter your Password"
+              type="password"
+              autoComplete="off"
               onChange={handleInput}
               value={formValues.password}
             />
@@ -181,6 +211,8 @@ const NewUserForm = () => {
               className="register-form__field"
               name="confirm_password"
               placeholder="Confirm your Password"
+              type="password"
+              autoComplete="off"
               onChange={handleInput}
               value={formValues.confirm_password}
             />
@@ -193,20 +225,35 @@ const NewUserForm = () => {
       </div>
       <hr className="register-form__divider" />
       <div className="register-form__teams">
+        <h2 className="register-form__teams--heading">Choose a team</h2>
         <div className="register-form__teams--group">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+          {teamList.slice(0, 5).map((team) => (
+            <div
+              key={team.id}
+              className={`team-container team-container__${team.name.replace(
+                " ",
+                ""
+              )} ${selectedTeam === team.id ? "selected" : ""}`}
+              onClick={() => handleTeamSelect(team.id)}
+            ></div>
+          ))}
         </div>
         <div className="register-form__teams--group">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+          {teamList.slice(5).map((team) => (
+            <div
+              key={team.id}
+              className={`team-container team-container__${team.name.replace(
+                " ",
+                ""
+              )} ${selectedTeam === team.id ? "selected" : ""}`}
+              onClick={() => handleTeamSelect(team.id)}
+            ></div>
+          ))}
         </div>
+        {errors.team_id && <FormErrorMessage message={errors.team_id} />}
+        <button className="register-form__button" onSubmit={handleSubmit}>
+          <span className="register-form__button--text">Start</span>
+        </button>
       </div>
     </form>
   );
