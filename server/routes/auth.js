@@ -10,7 +10,6 @@ const { JWT_SECRET, JWT_LONG_EXPIRY, JWT_SHORT_EXPIRY } = process.env;
 
 // Registration Configuration
 router.post("/register", async (req, res) => {
-  console.log(req.body);
   // List all required properties
   const requiredProperties = [
     "username",
@@ -50,14 +49,16 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Insert the new user into the database
-    await knex("users").insert({
-      username,
-      first_name,
-      last_name,
-      email,
-      password_hash: hashedPassword,
-      team_id,
-    });
+    const [userId] = await knex("users")
+      .insert({
+        username,
+        first_name,
+        last_name,
+        email,
+        password_hash: hashedPassword,
+        team_id,
+      })
+      .then(([id]) => [id]);
 
     // Generate the JWT for the user
     const token = jwt.sign(
@@ -73,13 +74,17 @@ router.post("/register", async (req, res) => {
 
     // Return the token along with the success message
     return res.status(201).json({
-      message: "Registration Successful",
+      message: "Registration Successful!",
+      success: true,
       token: token,
+      username: username,
+      id: userId,
     });
   } catch (error) {
-    console.error("Unable to Register: ", error);
+    console.error("Unable to Register User: ", error);
     return res.status(500).json({
       message: "Internal Server Error",
+      success: false,
     });
   }
 });
@@ -133,13 +138,16 @@ router.post("/login", async (req, res) => {
     // Send a token with the success message
     return res.status(200).json({
       message: "Login Successful",
+      success: true,
       id: user.id,
+      username: user.username,
       token: token,
     });
   } catch (error) {
     console.error("Unable to Login: ", error);
     return res.status(500).json({
       message: "Internal Server Error",
+      success: false,
     });
   }
 });

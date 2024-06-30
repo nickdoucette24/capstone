@@ -1,7 +1,7 @@
 import "./ThisYearPage.scss";
 
 const ThisYearPage = () => {
-  return <div>ThisYearPage</div>;
+  return <div className="this-year">ThisYearPage</div>;
 };
 
 export default ThisYearPage;

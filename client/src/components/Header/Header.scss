@@ -9,7 +9,8 @@
   align-items: center;
   background-color: $white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
+  position: fixed;
+  width: 100%;
   z-index: 5;
 }
 
@@ -19,6 +20,7 @@
 
   @include tablet {
     width: 100%;
+    max-width: 68.75rem;
   }
 
   @include laptop {
@@ -51,6 +53,10 @@
       &:active {
         transform: scale(1);
       }
+    }
+
+    @include laptop {
+      margin-left: 0;
     }
   }
 
@@ -92,6 +98,24 @@
 
   @include tablet {
     display: flex;
+    margin: 1rem 2.5rem;
+    gap: 0.5rem;
+  }
+
+  @include laptop {
+    margin-right: 0;
+  }
+
+  &__button {
+    @include auth-button;
+  }
+}
+
+.home-container {
+  display: none;
+
+  @include tablet {
+    @include flex-center;
     margin: 1rem 2.5rem;
     gap: 0.5rem;
   }

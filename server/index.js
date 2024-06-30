@@ -14,6 +14,23 @@ app.get("/", (_req, res) => {
   res.send("Server is live on PORT: " + PORT);
 });
 
+// Basic GET request to get teams from MySQL teams table
+app.get("/teams", async (req, res) => {
+  try {
+    const teams = await knex("teams").select("id", "name");
+    res.status(200).json({
+      message: "Teams list retrieved successfully.",
+      success: true,
+      content: teams,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error Getting Current Teams: ",
+      success: false,
+    });
+  }
+});
+
 // API Routes
 const authRoutes = require("./routes/auth");
 const liveRoutes = require("./routes/live");

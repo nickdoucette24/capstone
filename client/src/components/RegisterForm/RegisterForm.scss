@@ -1,0 +1,183 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/global/global" as *;
+
+// Registration Form Styling
+
+.register-form__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.register-form__inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &--group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+.register-form__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 25rem;
+}
+
+.register-form__label {
+  @include form-labels;
+}
+
+.register-form__field {
+  @include form-fields;
+  box-sizing: border-box;
+}
+
+.register-form__divider {
+  border: none;
+  border-bottom: 2px solid $grey;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 25rem;
+  margin: 1.5rem 0;
+}
+
+// Team Container Styling
+.register-form__teams {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+
+  &--group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  &--heading {
+    margin-top: 0;
+  }
+}
+
+.team-container {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 0.75rem;
+  background-color: $white;
+  width: 100%;
+  max-width: 25rem;
+  height: 5rem;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: $pitstop-hoverLightBlue 0px 6px 12px -2px,
+      $pitstop-hoverLightBlue 0px 3px 7px -3px;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+
+  &__alpine {
+    background-image: url("../../assets/images/logos/alpine-tile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: $tile-alpine;
+  }
+
+  &__astonmartin {
+    background-image: url("../../assets/images/logos/astonmartin-tile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: $tile-astonmartin;
+  }
+
+  &__ferrari {
+    background-image: url("../../assets/images/logos/ferrari-tile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: $tile-ferrari;
+  }
+
+  &__haas {
+    background-image: url("../../assets/images/logos/haas-tile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+
+  &__kicksauber {
+    background-image: url("../../assets/images/logos/kicksauber-tile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: $tile-kicksauber;
+  }
+
+  &__mercedes {
+    background-image: url("../../assets/images/logos/mercedes-tile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: $tile-mercedes;
+  }
+
+  &__mclaren {
+    background-image: url("../../assets/images/logos/mclaren-tile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: $tile-mclaren;
+  }
+
+  &__redbull {
+    background-image: url("../../assets/images/logos/redbull-tile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: $tile-redbull;
+  }
+
+  &__vcarb {
+    background-image: url("../../assets/images/logos/vcarb-tile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: $tile-vcarb;
+  }
+
+  &__williams {
+    background-image: url("../../assets/images/logos/williams-tile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: $tile-williams;
+  }
+}
+
+.selected {
+  box-shadow: $pitstop-yellow 0px 6px 15px -2px, $pitstop-red 0px 3px 9px -3px;
+
+  &:hover {
+    box-shadow: $pitstop-yellow 0px 6px 15px -2px, $pitstop-red 0px 3px 9px -3px;
+  }
+}
+
+// Button Styling
+.register-form__button {
+  @include flex-center;
+  @include cta-button;
+}
