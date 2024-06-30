@@ -33,6 +33,7 @@ const Header = ({ user, setUser }) => {
 
   const handleNavigateToProfile = () => {
     if (user) {
+      handleMenuClose();
       navigate(`/home/${user.username}/${user.id}`);
     }
   };
@@ -142,6 +143,9 @@ const Header = ({ user, setUser }) => {
         handleLoginModalClose={handleLoginModalClose}
         isLoginModalOpen={isLoginModalOpen}
         handleScrollToRegister={handleScrollToRegister}
+        user={user}
+        handleLogout={handleLogout}
+        handleNavigateToProfile={handleNavigateToProfile}
       />
       <LoginModal
         isLoginModalOpen={isLoginModalOpen}

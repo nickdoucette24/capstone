@@ -6,6 +6,9 @@ const SideMenu = ({
   handleMenuClose,
   handleLoginModalOpen,
   handleScrollToRegister,
+  user,
+  handleNavigateToProfile,
+  handleLogout,
 }) => {
   return (
     <div className={`side-menu ${isMenuOpen ? "side-menu__open" : ""}`}>
@@ -31,17 +34,37 @@ const SideMenu = ({
           </Link>
         </nav>
         <h5 className="side-menu__heading">Account</h5>
-        <div className="side-menu__auth">
-          <button className="side-menu__button" onClick={handleLoginModalOpen}>
-            Login
-          </button>
-          <button
-            className="side-menu__button"
-            onClick={handleScrollToRegister}
-          >
-            Sign up
-          </button>
-        </div>
+        {user ? (
+          <div className="side-menu__auth">
+            <button
+              className="home-container__button"
+              onClick={handleNavigateToProfile}
+            >
+              Home
+            </button>
+            <button
+              className="home-container__button"
+              onClick={() => handleLogout()}
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div className="side-menu__auth">
+            <button
+              className="side-menu__button"
+              onClick={handleLoginModalOpen}
+            >
+              Login
+            </button>
+            <button
+              className="side-menu__button"
+              onClick={handleScrollToRegister}
+            >
+              Sign up
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
