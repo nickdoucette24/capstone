@@ -5,6 +5,7 @@
 // Section Styling
 .landing-page {
   @include flex-center;
+  padding-top: 5.5rem;
 
   &__container {
     display: flex;

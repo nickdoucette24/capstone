@@ -138,13 +138,16 @@ router.post("/login", async (req, res) => {
     // Send a token with the success message
     return res.status(200).json({
       message: "Login Successful",
+      success: true,
       id: user.id,
+      username: user.username,
       token: token,
     });
   } catch (error) {
     console.error("Unable to Login: ", error);
     return res.status(500).json({
       message: "Internal Server Error",
+      success: false,
     });
   }
 });

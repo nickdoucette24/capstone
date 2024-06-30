@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 import FormErrorMessage from "../FormErrorMessage/FormErrorMessage";
 
-import "./NewUserForm.scss";
+import "./RegisterForm.scss";
 
 const url = process.env.REACT_APP_SERVER_URL;
 
-const NewUserForm = () => {
+const RegisterForm = ({ handleRegisterModalClose, handleMenuClose }) => {
   const [errors, setErrors] = useState({});
   const [selectedTeam, setSelectedTeam] = useState("");
   const [formValues, setFormValues] = useState({
@@ -259,4 +259,4 @@ const NewUserForm = () => {
   );
 };
 
-export default NewUserForm;
+export default RegisterForm;

@@ -1,10 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import NewUserForm from "../../components/NewUserForm/NewUserForm";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import heroImage from "../../assets/images/photos/hero-img.png";
 import "./WelcomePage.scss";
 
 const WelcomePage = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.scrollToRegister) {
+      const registerContainer = document.querySelector(".register-container");
+      if (registerContainer) {
+        const offset =
+          registerContainer.getBoundingClientRect().top + window.scrollY - 96; // 5rem = 80px
+        window.scrollTo({ top: offset, behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
   return (
     <section className="landing-page">
       <div className="landing-page__container">
@@ -65,7 +78,7 @@ const WelcomePage = () => {
         <div className="register-container">
           <h4 className="register-container__heading">Create an account</h4>
           <div className="register-form__section">
-            <NewUserForm />
+            <RegisterForm />
           </div>
         </div>
       </div>
