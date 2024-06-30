@@ -20,6 +20,11 @@ const WelcomePage = () => {
 
   return (
     <section className="landing-page">
+      <div className="heading-container">
+        <h1 className="hero-container__heading--top">
+          follow Formula 1 like never before
+        </h1>
+      </div>
       <div className="landing-page__container">
         <div className="hero-wrapper">
           <div className="hero-container">
@@ -31,9 +36,11 @@ const WelcomePage = () => {
               />
             </div>
             <div className="hero-container__description">
-              <h1 className="hero-container__heading">
-                follow Formula 1 like never before
-              </h1>
+              <div className="heading-container">
+                <h1 className="hero-container__heading--middle">
+                  follow Formula 1 like never before
+                </h1>
+              </div>
               <div className="content-container">
                 <h3 className="hero-list__heading">What to do</h3>
                 <ul className="hero-list">

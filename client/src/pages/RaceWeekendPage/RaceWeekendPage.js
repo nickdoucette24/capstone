@@ -1,7 +1,7 @@
 import "./RaceWeekendPage.scss";
 
 const RaceWeekendPage = () => {
-  return <div>RaceWeekendPage</div>;
+  return <div className="race-weekend">RaceWeekendPage</div>;
 };
 
 export default RaceWeekendPage;
