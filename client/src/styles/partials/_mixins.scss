@@ -143,3 +143,37 @@
     font-size: 0.9rem;
   }
 }
+
+@mixin session-tile {
+  @include flex-center;
+  height: 5rem;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 1.75rem;
+  color: $white;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: font-weight 0.2s linear, box-shadow 0.2s linear, filter 0.3s,
+    color 0.3s ease;
+  filter: grayscale(100%);
+
+  &:hover {
+    filter: grayscale(0%);
+    box-sizing: border-box;
+    box-shadow: $pitstop-hoverLightBlue 0px 6px 12px -2px,
+      $pitstop-hoverLightBlue 0px 3px 7px -3px;
+    font-weight: 600;
+  }
+
+  &:active {
+    box-shadow: none;
+    outline: none;
+  }
+}

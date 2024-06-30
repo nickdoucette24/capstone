@@ -15,7 +15,7 @@ app.get("/", (_req, res) => {
 });
 
 // Basic GET request to get teams from MySQL teams table
-app.get("/teams", async (req, res) => {
+app.get("/teams", async (_req, res) => {
   try {
     const teams = await knex("teams").select("id", "name");
     res.status(200).json({
