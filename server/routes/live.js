@@ -121,30 +121,21 @@ router.get("/intervals", async (req, res) => {
 });
 
 // Route to get Race Details
-router.get("/race-details", async (req, res) => {
-  // Pull params from request body
-  const { meeting_key } = req.query;
-
-  // Validate that the Meeting Key is in the Request Body
-  if (!meeting_key) {
-    return res.status(400).json("Bad Request: Meeting Key Required");
-  }
-
+router.get("/race-details", async (_req, res) => {
   try {
     // Make a GET request to the OpenF1 API
-    const response = await axios.get(
-      `${liveUrl}/meetings?meeting_key=${meeting_key}`
-    );
-    const race = response.data;
+    const response = await axios.get(`${liveUrl}/meetings?meeting_key=latest`);
+    const raceDetails = response.data;
+    console.log(response.data);
 
-    const formattedRace = race.map((race) => ({
+    const formattedRace = raceDetails.map((race) => ({
       circuit_key: race.circuit_key,
       circuit_short_name: race.circuit_short_name,
       country_name: race.country_name,
       date_start: race.date_start,
       location: race.location,
       meeting_key: race.meeting_key,
-      meeting_name: race.meeting_key,
+      meeting_name: race.meeting_name,
       meeting_official_name: race.meeting_official_name,
       year: race.year,
     }));
@@ -152,6 +143,22 @@ router.get("/race-details", async (req, res) => {
     return res.status(200).json(formattedRace);
   } catch (error) {
     console.error("Unable to get race details: ", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
+// Route to get All Weekend Sessions
+router.get("/current-weekend", async (_req, res) => {
+  try {
+    // Get the latest sessions via latest meeting_key
+    const response = await axios.get(`${liveUrl}/sessions?meeting_key=latest`);
+    const sessions = response.data;
+
+    return res.status(200).json(sessions);
+  } catch (error) {
+    console.error("Unable to get current race weekend data: ", error);
     return res.status(500).json({
       message: "Internal Server Error",
     });

@@ -12,16 +12,23 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+
+    @include laptop {
+      width: 63.75rem;
+    }
   }
 
   &__label {
     @include form-labels;
     width: 100%;
+
+    @include laptop {
+      width: 63.75rem;
+    }
   }
 
   &__field {
     @include form-fields;
-    width: 100%;
     max-width: 25rem;
   }
 

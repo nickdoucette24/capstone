@@ -4,6 +4,7 @@ import Header from "./components/Header/Header";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import RaceWeekendPage from "./pages/RaceWeekendPage/RaceWeekendPage";
+import SessionTrackerPage from "./pages/SessionTrackerPage/SessionTrackerPage";
 import ThisYearPage from "./pages/ThisYearPage/ThisYearPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import "./App.scss";
@@ -35,6 +36,16 @@ function App() {
           <Route path="/" element={<WelcomePage />} />
         )}
         <Route path="/race-weekend" element={<RaceWeekendPage />} />
+        {user ? (
+          <>
+            <Route
+              path="/race-weekend/:meetingKey/:sessionKey"
+              element={<SessionTrackerPage />}
+            />
+          </>
+        ) : (
+          <Route path="/" element={<WelcomePage />} />
+        )}
         <Route path="/this-year" element={<ThisYearPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

@@ -21,19 +21,21 @@ const LoginModal = ({ isLoginModalOpen, handleLoginModalClose, setUser }) => {
     isLoginModalOpen && (
       <div className="login-modal">
         <div className="login-modal__wrapper">
-          <div className="login-modal__content">
-            <h2 className="login-modal__heading">Login</h2>
-            <img
-              className="login-modal__close"
-              src={closeIcon}
-              alt="x icon to close the modal form popout."
-              onClick={handleLoginModalClose}
+          <div className="login-modal__box">
+            <div className="login-modal__content">
+              <h2 className="login-modal__heading">Login</h2>
+              <img
+                className="login-modal__close"
+                src={closeIcon}
+                alt="x icon to close the modal form popout."
+                onClick={handleLoginModalClose}
+              />
+            </div>
+            <LoginForm
+              handleLoginModalClose={handleLoginModalClose}
+              setUser={setUser}
             />
           </div>
-          <LoginForm
-            handleLoginModalClose={handleLoginModalClose}
-            setUser={setUser}
-          />
         </div>
       </div>
     )

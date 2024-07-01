@@ -38,6 +38,10 @@
 .register-form__field {
   @include form-fields;
   box-sizing: border-box;
+
+  @include laptop {
+    line-height: 1.5rem;
+  }
 }
 
 .register-form__divider {
