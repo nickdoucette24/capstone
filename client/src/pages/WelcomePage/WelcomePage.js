@@ -22,7 +22,7 @@ const WelcomePage = () => {
     <section className="landing-page">
       <div className="heading-container">
         <h1 className="hero-container__heading--top">
-          follow Formula 1 like never before
+          enhance your race experience
         </h1>
       </div>
       <div className="landing-page__container">
@@ -38,7 +38,7 @@ const WelcomePage = () => {
             <div className="hero-container__description">
               <div className="heading-container">
                 <h1 className="hero-container__heading--middle">
-                  follow Formula 1 like never before
+                  enhance your race experience
                 </h1>
               </div>
               <div className="content-container">
@@ -53,29 +53,30 @@ const WelcomePage = () => {
                       Race Weekend
                     </Link>{" "}
                     page to follow every session{" "}
-                    <strong className="hero-list__item--bold">LIVE</strong>
+                    <strong className="hero-list__item--bold">LIVE</strong> as
+                    it progresses
                   </li>
                   <li className="hero-list__item">
-                    follow along in <strong>real time</strong> to view in-depth
-                    data on each individual driver and team as the session
-                    progresses
+                    view detailed data on the drivers and cars which is
+                    unavailable through streaming
                   </li>
                   <li className="hero-list__item">
                     use the{" "}
                     <Link to={"/this-year"} className="hero-list__item--link">
                       This Year
                     </Link>{" "}
-                    page to follow the current season
+                    page to check up on the current season and championship
+                    battles
                   </li>
                   <li className="hero-list__item">
-                    build your{" "}
+                    customize your{" "}
                     <Link
                       to={"/profile-page/:id"}
                       className="hero-list__item--link"
                     >
                       Profile Page
                     </Link>{" "}
-                    to show you the standings and stats you like
+                    to show you specific standings and stats
                   </li>
                 </ul>
               </div>

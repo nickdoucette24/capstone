@@ -95,57 +95,66 @@ const RaceWeekendPage = () => {
         <h1 className="race-weekend__title--grandprix">
           {currentRaceDetails.meeting_name}
         </h1>
+        <h4 className="race-weekend__title--fullname">
+          ({currentRaceDetails.meeting_official_name})
+        </h4>
         <h3 className="race-weekend__title--name">
-          {currentRaceDetails.location}
+          {currentRaceDetails.location},{" "}
+          <span className="race-weekend__title--country">
+            {currentRaceDetails.country_name}
+          </span>
         </h3>
       </div>
       <div className="race-weekend__wrapper">
         <div className="race-weekend__container">
+          <h2 className="race-weekend__session">Practice Sessions</h2>
           {adjustedPracticeSessions.map((session, index) => (
             <Link
               key={session.session_key}
               to={`/race-weekend/${currentRaceDetails.meeting_key}/${session.session_key}`}
               className={`race-weekend__container--p${index + 1}`}
             >
-              <div className="race-weeking__link--text">
+              <div className="race-weekend__link--practice">
                 {session.session_name}
               </div>
             </Link>
           ))}
         </div>
         <div className="race-weekend__container">
+          <h2 className="race-weekend__session">Qualifying Sessions</h2>
           {adjustedQualifyingSessions.map((session, index) => (
             <Link
               key={session.session_key}
               to={`/race-weekend/${currentRaceDetails.meeting_key}/${session.session_key}`}
               className={`race-weekend__container--qualifying${index + 1}`}
             >
-              <div className="race-weeking__link--text">
+              <div className="race-weekend__link--qualifying">
                 {session.session_name}
               </div>
             </Link>
           ))}
         </div>
         <div className="race-weekend__container">
+          <h2 className="race-weekend__session">Race Sessions</h2>
           {adjustedRaceSessions.map((session, index) => (
             <Link
               key={session.session_key}
               to={`/race-weekend/${currentRaceDetails.meeting_key}/${session.session_key}`}
               className={`race-weekend__container--race${index + 1}`}
             >
-              <div className="race-weeking__link--text">
+              <div className="race-weekend__link--race">
                 {session.session_name}
               </div>
             </Link>
           ))}
-          {hasSprint && (
+          {/* {hasSprint && (
             <Link
               to={`/race-weekend/${currentRaceDetails.meeting_key}/main-race`}
               className="race-weekend__container--main-race"
             >
               Race
             </Link>
-          )}
+          )} */}
         </div>
       </div>
     </div>

@@ -152,11 +152,13 @@
   font-size: 1.75rem;
   color: $white;
   width: 100%;
+  max-width: 24.75rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   border-radius: 0.75rem;
+  border: 2px solid $white;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -166,7 +168,7 @@
 
   &:hover {
     filter: grayscale(0%);
-    box-sizing: border-box;
+    // box-sizing: border-box;
     box-shadow: $pitstop-hoverLightBlue 0px 6px 12px -2px,
       $pitstop-hoverLightBlue 0px 3px 7px -3px;
     font-weight: 600;
@@ -175,5 +177,13 @@
   &:active {
     box-shadow: none;
     outline: none;
+  }
+
+  @include tablet {
+    max-width: 32rem;
+  }
+
+  @include laptop {
+    max-width: 45rem;
   }
 }
