@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import useAuth from "./hooks/useAuth";
 import Header from "./components/Header/Header";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
@@ -15,6 +16,7 @@ function App() {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
+  const loggedIn = useAuth();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -39,7 +41,7 @@ function App() {
         {user ? (
           <>
             <Route
-              path="/race-weekend/:meetingKey/:sessionKey"
+              path="/race-weekend/:meeting/:session"
               element={<SessionTrackerPage />}
             />
           </>
