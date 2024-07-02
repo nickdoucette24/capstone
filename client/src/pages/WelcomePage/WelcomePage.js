@@ -4,7 +4,7 @@ import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import heroImage from "../../assets/images/photos/hero-img.png";
 import "./WelcomePage.scss";
 
-const WelcomePage = () => {
+const WelcomePage = ({ setUser }) => {
   const location = useLocation();
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const WelcomePage = () => {
         <div className="register-container">
           <h4 className="register-container__heading">Create an account</h4>
           <div className="register-form__section">
-            <RegisterForm />
+            <RegisterForm setUser={setUser} />
           </div>
         </div>
       </div>

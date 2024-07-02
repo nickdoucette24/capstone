@@ -112,10 +112,10 @@ router.get("/track-maps", async (req, res) => {
       id: track.id,
       name: track.name,
       image: track.image,
-      competition: {
-        id: track.competition.id,
-        name: track.competition.name,
-      },
+      first_grand_prix: track.first_grand_prix,
+      laps: track.laps,
+      length: track.length,
+      race_distance: track.race_distance,
     }));
 
     return res.status(200).json(formattedTrackMaps);

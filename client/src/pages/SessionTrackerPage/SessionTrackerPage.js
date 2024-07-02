@@ -56,15 +56,35 @@ const trackImages = {
   Suzuka: suzuka,
 };
 
+const formatDistance = (distance) => {
+  if (!distance) return "";
+  return distance.replace(/kms?$/i, "km");
+};
+
+const formatDate = (timestamp) => {
+  const date = new Date(timestamp);
+  return date.toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  });
+};
+
 const SessionTrackerPage = () => {
-  const [raceWeekend, setRaceWeekend] = useState([]);
+  // const [raceWeekend, setRaceWeekend] = useState([]);
   const [currentRaceDetails, setCurrentRaceDetails] = useState({});
-  const [trackMap, setTrackMap] = useState(""); // Add this line
-  const { meeting, session } = useParams();
+  const [trackMap, setTrackMap] = useState("");
+  const [trackDetails, setTrackDetails] = useState({});
+  const [weatherData, setWeatherData] = useState({});
+  const { session } = useParams();
 
   useEffect(() => {
     // Scroll to top when the component mounts
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
 
     const getCircuitMappings = async () => {
       try {
@@ -80,15 +100,37 @@ const SessionTrackerPage = () => {
       }
     };
 
-    const getRaceWeekend = async () => {
+    const getWeatherData = async (session_key) => {
       try {
-        const response = await axios.get(`${url}/live/current-weekend`);
-        setRaceWeekend(response.data);
-        sessionStorage.setItem("currentWeekend", JSON.stringify(response.data));
+        const response = await axios.get(`${url}/live/weather`, {
+          params: { session_key },
+        });
+        setWeatherData(response.data);
       } catch (error) {
-        console.error("Error fetching race weekend data: ", error);
+        console.error("Error retrieving weather data: ", error);
       }
     };
+
+    const getTrackMapAndDetails = async (track_id) => {
+      try {
+        const response = await axios.get(`${url}/stats/track-maps`, {
+          params: { track_id },
+        });
+        setTrackDetails(response.data[0]);
+      } catch (error) {
+        console.error("Error retrieving track map: ", error);
+      }
+    };
+
+    // const getRaceWeekend = async () => {
+    //   try {
+    //     const response = await axios.get(`${url}/live/current-weekend`);
+    //     setRaceWeekend(response.data);
+    //     sessionStorage.setItem("currentWeekend", JSON.stringify(response.data));
+    //   } catch (error) {
+    //     console.error("Error retrieving race weekend data: ", error);
+    //   }
+    // };
 
     const getCurrentRaceDetails = async () => {
       try {
@@ -100,7 +142,7 @@ const SessionTrackerPage = () => {
           JSON.stringify(raceDetails)
         );
 
-        // Get the circuit mappings from sessionStorage or fetch if not available
+        // Get the circuit mappings from sessionStorage or get if not available
         let circuitMappings = sessionStorage.getItem("circuitMappings");
         if (!circuitMappings) {
           circuitMappings = await getCircuitMappings();
@@ -115,24 +157,32 @@ const SessionTrackerPage = () => {
           );
           if (circuit) {
             setTrackMap(trackImages[circuit.circuit_short_name]);
+            getTrackMapAndDetails(circuit.id);
+            getWeatherData(session);
+            // Start the interval to fetch weather data every minute
+            const interval = setInterval(() => {
+              getWeatherData(session);
+            }, 65000);
+
+            return () => clearInterval(interval);
           } else {
             console.error("No matching circuit found for the circuit key");
           }
         }
       } catch (error) {
-        console.error("Error fetching current race details: ", error);
+        console.error("Error retrieving current race details: ", error);
       }
     };
 
-    const storedRaceWeekend = sessionStorage.getItem("currentWeekend");
+    // const storedRaceWeekend = sessionStorage.getItem("currentWeekend");
     const storedRaceDetails = sessionStorage.getItem("currentRaceDetails");
 
-    if (storedRaceWeekend) {
-      const parsedWeekend = JSON.parse(storedRaceWeekend);
-      setRaceWeekend(parsedWeekend);
-    } else {
-      getRaceWeekend();
-    }
+    // if (storedRaceWeekend) {
+    //   const parsedWeekend = JSON.parse(storedRaceWeekend);
+    //   setRaceWeekend(parsedWeekend);
+    // } else {
+    //   getRaceWeekend();
+    // }
 
     if (storedRaceDetails) {
       const parsedDetails = JSON.parse(storedRaceDetails);
@@ -146,6 +196,14 @@ const SessionTrackerPage = () => {
         );
         if (circuit) {
           setTrackMap(trackImages[circuit.circuit_short_name]);
+          getTrackMapAndDetails(circuit.id);
+          getWeatherData(session);
+          // Start the interval to fetch weather data every minute
+          const interval = setInterval(() => {
+            getWeatherData(session);
+          }, 65000);
+
+          return () => clearInterval(interval);
         } else {
           console.error("No matching circuit found for the circuit key");
         }
@@ -174,15 +232,55 @@ const SessionTrackerPage = () => {
             <h2 className="tracker-container__map--heading">
               {currentRaceDetails.circuit_short_name}
             </h2>
-            {trackMap && (
-              <img
-                className="tracker-container__map--image"
-                src={trackMap}
-                alt={`${currentRaceDetails.circuit_short_name} Track Map`}
-              />
-            )}
+            <img
+              className="tracker-container__map--image"
+              src={trackMap}
+              alt={`${currentRaceDetails.circuit_short_name} Track Map`}
+            />
           </div>
-          <div className="tracker-container__track"></div>
+          <div className="tracker-container__track">
+            <h4 className="tracker-container__track--title">Track Details</h4>
+            <div>
+              <p className="tracker-container__track--stat">
+                Track Name:{" "}
+                <strong className="tracker-container__track--data">
+                  {trackDetails.name}
+                </strong>
+              </p>
+              <p className="tracker-container__track--stat">
+                Laps:{" "}
+                <strong className="tracker-container__track--data">
+                  {trackDetails.laps}
+                </strong>
+              </p>
+              <p className="tracker-container__track--stat">
+                Track Length:{" "}
+                <strong className="tracker-container__track--data">
+                  {formatDistance(trackDetails.length)}
+                </strong>
+              </p>
+              <p className="tracker-container__track--stat">
+                Race Distance:{" "}
+                <strong className="tracker-container__track--data">
+                  {formatDistance(trackDetails.race_distance)}
+                </strong>
+              </p>
+              <p className="tracker-container__track--stat">
+                First Grand Prix:{" "}
+                <strong className="tracker-container__track--data">
+                  {trackDetails.first_grand_prix}
+                </strong>
+              </p>
+              <p className="tracker-container__track--stat">
+                <strong className="tracker-container__track--live">LIVE</strong>{" "}
+                Track Temperature:{" "}
+                <strong className="tracker-container__track--data">
+                  {weatherData.track_temperature}°C
+                </strong>{" "}
+                (as of {formatDate(weatherData.date)})
+              </p>
+            </div>
+          </div>
         </div>
         <div className="tracker-container__group">
           <div className="tracker-container__order"></div>

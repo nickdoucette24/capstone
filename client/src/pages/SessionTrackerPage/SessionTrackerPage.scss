@@ -27,6 +27,10 @@
   width: 100%;
   gap: 2rem;
 
+  // @include laptop {
+  //   flex-direction: row;
+  // }
+
   &__group {
     display: flex;
     flex-direction: column;
@@ -67,6 +71,28 @@
 
   &__track {
     @include tracker-tile;
+    flex-direction: column;
+
+    &--stat {
+      font-size: 0.8rem;
+      padding: 0.25rem 0;
+      margin: 0;
+    }
+
+    &--title {
+      text-decoration: underline;
+      font-size: 1rem;
+      margin: 0 0 0.5rem 0;
+    }
+
+    &--data {
+      font-size: 0.8rem;
+      color: $pitstop-lightBlue;
+    }
+
+    &--live {
+      color: $pitstop-red;
+    }
   }
 
   &__order {
