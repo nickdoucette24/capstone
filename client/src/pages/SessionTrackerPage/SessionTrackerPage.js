@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import SessionOrderRow from "../../components/SessionOrderRow/SessionOrderRow";
 import australia from "../../assets/images/photos/australia.png";
 import bahrain from "../../assets/images/photos/bahrain.png";
 import jeddah from "../../assets/images/photos/jeddah.png";
@@ -79,6 +80,7 @@ const SessionTrackerPage = () => {
   const [trackMap, setTrackMap] = useState("");
   const [trackDetails, setTrackDetails] = useState({});
   const [weatherData, setWeatherData] = useState({});
+  const [drivers, setDrivers] = useState([]);
   const { session } = useParams();
 
   useEffect(() => {
@@ -148,6 +150,19 @@ const SessionTrackerPage = () => {
     getCurrentRaceDetails();
   }, [session]);
 
+  // Session Order Data
+  useEffect(() => {
+    const getDriverDetails = async () => {
+      try {
+        const response = await axios.get(`${url}/live/drivers`);
+        setDrivers(response.data);
+      } catch (error) {
+        console.error("Error retrieving driver details: ", error);
+      }
+    };
+
+    getDriverDetails();
+  }, []);
   return (
     <div className="session-tracker">
       <div className="tracker-container">
@@ -218,7 +233,17 @@ const SessionTrackerPage = () => {
           </div>
         </div>
         <div className="tracker-container__group">
-          <div className="tracker-container__order"></div>
+          <div className="tracker-container__order">
+            <h3 className="tracker-container__order--heading">
+              Order on Track
+            </h3>
+            {drivers.length > 0 &&
+              drivers.map((driver) => (
+                <div className="driver-tile" key={driver.driver_number}>
+                  <SessionOrderRow driver={driver} />
+                </div>
+              ))}
+          </div>
         </div>
         <div className="tracker-container__group">
           <div className="tracker-container__weather"></div>

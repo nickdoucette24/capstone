@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import heroImage from "../../assets/images/photos/hero-img.png";
-import alonso_1 from "../../assets/images/photos/alonso_1.png";
 import "./WelcomePage.scss";
 
 const WelcomePage = ({ setUser }) => {
@@ -26,14 +25,12 @@ const WelcomePage = ({ setUser }) => {
   return (
     <section className="landing-page">
       <div className="heading-container">
-        <h1 className="hero-container__heading--top">
+        <h1 className="heading-container__title--top">
           enhance your race experience
         </h1>
-        <img
-          className="hero-container__heading--topimage"
-          src={alonso_1}
-          alt="opaque still of Fernando Alonso celebrating."
-        />
+        <div className="heading-container__image--mobile"></div>
+        <div className="heading-container__image--tablet1"></div>
+        <div className="heading-container__image--tablet2"></div>
       </div>
       <div className="landing-page__container">
         <div className="hero-wrapper">
@@ -47,7 +44,7 @@ const WelcomePage = ({ setUser }) => {
             </div>
             <div className="hero-container__description">
               <div className="heading-container">
-                <h1 className="hero-container__heading--middle">
+                <h1 className="heading-container__title--middle">
                   enhance your race experience
                 </h1>
               </div>
@@ -92,6 +89,7 @@ const WelcomePage = ({ setUser }) => {
               </div>
             </div>
           </div>
+          <div className="heading-container__image--desktop"></div>
         </div>
         <div className="register-container">
           <h4 className="register-container__heading">Create an account</h4>

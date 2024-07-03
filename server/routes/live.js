@@ -7,7 +7,7 @@ const liveUrl = "https://api.openf1.org/v1";
 router.get("/drivers", async (_req, res) => {
   try {
     // Make a GET request to the OpenF1 API
-    const response = await axios.get(`${liveUrl}/drivers`);
+    const response = await axios.get(`${liveUrl}/drivers?session_key=latest`);
     const driversData = response.data;
 
     // Reduce driversData to get the most recent session for each driver
@@ -32,6 +32,7 @@ router.get("/drivers", async (_req, res) => {
       meeting_key: driver.meeting_key,
       headshot_url: driver.headshot_url,
       team_colour: driver.team_colour,
+      country_code: driver.country_code,
       team_name: driver.team_name,
     }));
 

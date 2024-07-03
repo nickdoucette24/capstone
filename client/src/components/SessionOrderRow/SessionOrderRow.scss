@@ -1,0 +1,68 @@
+@use "../../styles/global/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+
+.driver-container {
+  display: flex;
+  align-items: center;
+
+  &__tile {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__content {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-right: 1px solid $grey;
+  }
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0.25rem;
+    width: 8rem;
+
+    &--team {
+      padding: 0.25rem 0;
+      margin: 0;
+      border-bottom: 1px solid $grey;
+    }
+
+    &--firstName {
+      padding: 0.25rem 0 0 0;
+      margin: 0;
+    }
+
+    &--lastName {
+      padding: 0.25rem 0;
+      margin: 0;
+      border-bottom: 1px solid $grey;
+    }
+
+    &--number {
+      padding: 0 0.25rem 0.25rem 0.25rem;
+      width: fit-content;
+      border: 1px solid $black;
+      border-radius: 0.25rem;
+      margin: 0.25rem;
+    }
+  }
+
+  &__visuals {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 1px solid $grey;
+
+    &--headshot {
+      width: 3.5rem;
+    }
+
+    &--flag {
+    }
+  }
+}

@@ -43,15 +43,17 @@
     flex-direction: column;
 
     &--name {
-      margin: 0.5rem 0;
+      margin: 0 0 0.5rem 0;
+      color: $pitstop-hero;
     }
 
     &--fullname {
       margin: 0.5rem 0;
+      color: $pitstop-hoverLightBlue;
     }
 
     &--location {
-      margin: 0.5rem 0;
+      margin: 0.5rem 0 0 0;
     }
   }
 
@@ -62,6 +64,7 @@
 
     &--heading {
       margin: 0 0 1rem 0;
+      color: $pitstop-hero;
     }
 
     &--image {
@@ -81,6 +84,7 @@
 
     &--title {
       text-decoration: underline;
+      text-align: center;
       font-size: 1rem;
       margin: 0 0 0.5rem 0;
     }
@@ -97,6 +101,12 @@
 
   &__order {
     @include tracker-tile;
+    flex-direction: column;
+
+    &--heading {
+      color: $pitstop-hero;
+      margin: 0 0 1rem 0;
+    }
   }
 
   &__weather {
@@ -106,4 +116,10 @@
   &__standings {
     @include tracker-tile;
   }
+}
+
+.driver-tile {
+  background-color: $white;
+  border-radius: 0.75rem;
+  border: 1px solid $grey;
 }
