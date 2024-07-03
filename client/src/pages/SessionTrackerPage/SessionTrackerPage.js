@@ -75,7 +75,6 @@ const formatDate = (timestamp) => {
 };
 
 const SessionTrackerPage = () => {
-  // const [raceWeekend, setRaceWeekend] = useState([]);
   const [currentRaceDetails, setCurrentRaceDetails] = useState({});
   const [trackMap, setTrackMap] = useState("");
   const [trackDetails, setTrackDetails] = useState({});
@@ -83,16 +82,11 @@ const SessionTrackerPage = () => {
   const { session } = useParams();
 
   useEffect(() => {
-    // Scroll to top when the component mounts
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
 
     const getCircuitMappings = async () => {
       try {
         const response = await axios.get(`${url}/stats/circuit-mappings`);
-        sessionStorage.setItem(
-          "circuitMappings",
-          JSON.stringify(response.data)
-        );
         return response.data;
       } catch (error) {
         console.error("Error retrieving circuits data: ", error);
@@ -122,36 +116,14 @@ const SessionTrackerPage = () => {
       }
     };
 
-    // const getRaceWeekend = async () => {
-    //   try {
-    //     const response = await axios.get(`${url}/live/current-weekend`);
-    //     setRaceWeekend(response.data);
-    //     sessionStorage.setItem("currentWeekend", JSON.stringify(response.data));
-    //   } catch (error) {
-    //     console.error("Error retrieving race weekend data: ", error);
-    //   }
-    // };
-
     const getCurrentRaceDetails = async () => {
       try {
         const response = await axios.get(`${url}/live/race-details`);
         const raceDetails = response.data[0];
         setCurrentRaceDetails(raceDetails);
-        sessionStorage.setItem(
-          "currentRaceDetails",
-          JSON.stringify(raceDetails)
-        );
 
-        // Get the circuit mappings from sessionStorage or get if not available
-        let circuitMappings = sessionStorage.getItem("circuitMappings");
-        if (!circuitMappings) {
-          circuitMappings = await getCircuitMappings();
-        } else {
-          circuitMappings = JSON.parse(circuitMappings);
-        }
-
+        const circuitMappings = await getCircuitMappings();
         if (circuitMappings) {
-          // Find the corresponding track map URL
           const circuit = circuitMappings.find(
             (c) => c.circuit_key === raceDetails.circuit_key
           );
@@ -159,7 +131,6 @@ const SessionTrackerPage = () => {
             setTrackMap(trackImages[circuit.circuit_short_name]);
             getTrackMapAndDetails(circuit.id);
             getWeatherData(session);
-            // Start the interval to fetch weather data every minute
             const interval = setInterval(() => {
               getWeatherData(session);
             }, 65000);
@@ -174,44 +145,8 @@ const SessionTrackerPage = () => {
       }
     };
 
-    // const storedRaceWeekend = sessionStorage.getItem("currentWeekend");
-    const storedRaceDetails = sessionStorage.getItem("currentRaceDetails");
-
-    // if (storedRaceWeekend) {
-    //   const parsedWeekend = JSON.parse(storedRaceWeekend);
-    //   setRaceWeekend(parsedWeekend);
-    // } else {
-    //   getRaceWeekend();
-    // }
-
-    if (storedRaceDetails) {
-      const parsedDetails = JSON.parse(storedRaceDetails);
-      setCurrentRaceDetails(parsedDetails);
-      const circuitMappings = JSON.parse(
-        sessionStorage.getItem("circuitMappings")
-      );
-      if (circuitMappings) {
-        const circuit = circuitMappings.find(
-          (c) => c.circuit_key === parsedDetails.circuit_key
-        );
-        if (circuit) {
-          setTrackMap(trackImages[circuit.circuit_short_name]);
-          getTrackMapAndDetails(circuit.id);
-          getWeatherData(session);
-          // Start the interval to fetch weather data every minute
-          const interval = setInterval(() => {
-            getWeatherData(session);
-          }, 65000);
-
-          return () => clearInterval(interval);
-        } else {
-          console.error("No matching circuit found for the circuit key");
-        }
-      }
-    } else {
-      getCurrentRaceDetails();
-    }
-  }, []);
+    getCurrentRaceDetails();
+  }, [session]);
 
   return (
     <div className="session-tracker">

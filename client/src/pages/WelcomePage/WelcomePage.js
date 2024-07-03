@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import heroImage from "../../assets/images/photos/hero-img.png";
+import alonso_1 from "../../assets/images/photos/alonso_1.png";
 import "./WelcomePage.scss";
 
 const WelcomePage = ({ setUser }) => {
@@ -28,6 +29,11 @@ const WelcomePage = ({ setUser }) => {
         <h1 className="hero-container__heading--top">
           enhance your race experience
         </h1>
+        <img
+          className="hero-container__heading--topimage"
+          src={alonso_1}
+          alt="opaque still of Fernando Alonso celebrating."
+        />
       </div>
       <div className="landing-page__container">
         <div className="hero-wrapper">

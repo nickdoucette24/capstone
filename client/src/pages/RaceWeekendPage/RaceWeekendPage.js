@@ -19,7 +19,6 @@ const RaceWeekendPage = () => {
       try {
         const response = await axios.get(`${url}/live/current-weekend`);
         setRaceWeekend(response.data);
-        sessionStorage.setItem("currentWeekend", JSON.stringify(response.data));
       } catch (error) {
         console.error("Error fetching race weekend data: ", error);
       }
@@ -29,30 +28,13 @@ const RaceWeekendPage = () => {
       try {
         const response = await axios.get(`${url}/live/race-details`);
         setCurrentRaceDetails(response.data[0]);
-        sessionStorage.setItem(
-          "currentRaceDetails",
-          JSON.stringify(response.data[0])
-        );
       } catch (error) {
         console.error("Error fetching current race details: ", error);
       }
     };
 
-    const storedRaceWeekend = sessionStorage.getItem("currentWeekend");
-    const storedRaceDetails = sessionStorage.getItem("currentRaceDetails");
-
-    if (storedRaceWeekend) {
-      const parsedWeekend = JSON.parse(storedRaceWeekend);
-      setRaceWeekend(parsedWeekend);
-    } else {
-      getRaceWeekend();
-    }
-
-    if (storedRaceDetails) {
-      setCurrentRaceDetails(JSON.parse(storedRaceDetails));
-    } else {
-      getCurrentRaceDetails();
-    }
+    getRaceWeekend();
+    getCurrentRaceDetails();
   }, []);
 
   // Set the mapping functions variables
