@@ -112,7 +112,13 @@ router.get("/intervals", async (req, res) => {
     );
     const intervalData = response.data;
 
-    return res.status(200).json(intervalData);
+    // Sort the array by date in descending order and return the most recent interval
+    const sortedIntervals = intervalData.sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
+    const mostRecentInterval = sortedIntervals[0];
+
+    return res.status(200).json(mostRecentInterval);
   } catch (error) {
     console.error("Unable to get interval data: ", error);
     return res.status(500).json({

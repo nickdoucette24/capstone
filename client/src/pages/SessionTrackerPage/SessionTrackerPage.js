@@ -133,11 +133,11 @@ const SessionTrackerPage = () => {
             setTrackMap(trackImages[circuit.circuit_short_name]);
             getTrackMapAndDetails(circuit.id);
             getWeatherData(session);
-            const interval = setInterval(() => {
-              getWeatherData(session);
-            }, 65000);
+            // const interval = setInterval(() => {
+            //   getWeatherData(session);
+            // }, 65000);
 
-            return () => clearInterval(interval);
+            // return () => clearInterval(interval);
           } else {
             console.error("No matching circuit found for the circuit key");
           }
@@ -155,14 +155,45 @@ const SessionTrackerPage = () => {
     const getDriverDetails = async () => {
       try {
         const response = await axios.get(`${url}/live/drivers`);
-        setDrivers(response.data);
+        const driverDetails = response.data;
+
+        const driverPositions = [];
+        for (const driver of driverDetails) {
+          const driver_number = driver.driver_number;
+          const [positionResponse, intervalResponse] = await Promise.all([
+            axios.get(`${url}/live/positions`, {
+              params: { session_key: session, driver_number },
+            }),
+            axios.get(`${url}/live/intervals`, {
+              params: { session_key: session, driver_number },
+            }),
+          ]);
+
+          driverPositions.push({
+            ...driver,
+            position: positionResponse.data.position,
+            interval: intervalResponse.data.interval,
+            gap_to_leader: intervalResponse.data.gap_to_leader,
+          });
+
+          // Throttle requests
+          await new Promise((resolve) => setTimeout(resolve, 400));
+        }
+
+        setDrivers(driverPositions);
       } catch (error) {
         console.error("Error retrieving driver details: ", error);
       }
     };
 
     getDriverDetails();
-  }, []);
+    // const interval = setInterval(() => {
+    //   getDriverDetails();
+    // }, 20000);
+
+    // return () => clearInterval(interval);
+  }, [session]);
+
   return (
     <div className="session-tracker">
       <div className="tracker-container">
@@ -238,11 +269,13 @@ const SessionTrackerPage = () => {
               Order on Track
             </h3>
             {drivers.length > 0 &&
-              drivers.map((driver) => (
-                <div className="driver-tile" key={driver.driver_number}>
-                  <SessionOrderRow driver={driver} />
-                </div>
-              ))}
+              drivers
+                .sort((a, b) => a.position - b.position)
+                .map((driver) => (
+                  <div className="driver-tile" key={driver.driver_number}>
+                    <SessionOrderRow driver={driver} />
+                  </div>
+                ))}
           </div>
         </div>
         <div className="tracker-container__group">

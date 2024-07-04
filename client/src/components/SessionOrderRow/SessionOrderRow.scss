@@ -10,6 +10,14 @@
     display: flex;
     align-items: center;
     height: 100%;
+
+    &--position {
+      padding: 0 0.5rem;
+      min-width: 1.3rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      @include flex-center;
+    }
   }
 
   &__content {
@@ -17,6 +25,7 @@
     display: flex;
     justify-content: space-between;
     border-right: 1px solid $grey;
+    border-left: 1px solid $grey;
   }
 
   &__data {
@@ -45,7 +54,7 @@
     &--number {
       padding: 0 0.25rem 0.25rem 0.25rem;
       width: fit-content;
-      border: 1px solid $black;
+      border: 1px solid $grey;
       border-radius: 0.25rem;
       margin: 0.25rem;
     }
@@ -62,7 +71,46 @@
       width: 3.5rem;
     }
 
-    &--flag {
+    &--nationality {
+      padding: 0.25rem 0;
+      margin: 0;
+      border-bottom: 1px solid $grey;
+    }
+  }
+
+  &__intervals {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.3rem;
+    width: 4.375rem;
+    padding: 0 0.5rem;
+    height: 100%;
+    border-right: 1px solid $grey;
+
+    &--group {
+      margin: 0;
+    }
+
+    &--heading {
+      margin: 0;
+      border-bottom: 1px solid $grey;
+      font-weight: 700;
+      padding: 0.25rem 0;
+      @include flex-center;
+    }
+
+    &--interval {
+      margin: 0;
+      font-size: 1.2rem;
+      @include flex-center;
+    }
+
+    &--gtl {
+      margin: 0;
+      font-size: 1.2rem;
+      padding-bottom: 0.25rem;
+      @include flex-center;
     }
   }
 }

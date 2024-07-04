@@ -8,6 +8,9 @@ const SessionOrderRow = ({ driver }) => {
     name_acronym,
     team_name,
     country_code,
+    position,
+    interval,
+    gap_to_leader,
     session_key,
     meeting_key,
   } = driver;
@@ -17,7 +20,9 @@ const SessionOrderRow = ({ driver }) => {
 
   return (
     <div className="driver-container">
-      <div className="driver-container__tile"></div>
+      <div className="driver-container__tile">
+        <div className="driver-container__tile--position">{position}</div>
+      </div>
       <div className="driver-container__tile">
         <div className="driver-container__content">
           <div className="driver-container__data">
@@ -31,11 +36,9 @@ const SessionOrderRow = ({ driver }) => {
             <h4 className="driver-container__data--number">{driver_number}</h4>
           </div>
           <div className="driver-container__visuals">
-            <img
-              className="driver-container__visuals--flag"
-              src=""
-              alt="The national flag of the current driver"
-            />
+            <h4 className="driver-container__visuals--nationality">
+              {country_code}
+            </h4>
             <img
               className="driver-container__visuals--headshot"
               src={headshot_url}
@@ -44,7 +47,22 @@ const SessionOrderRow = ({ driver }) => {
           </div>
         </div>
       </div>
-      <div className="driver-container__tile"></div>
+      <div className="driver-container__tile">
+        <div className="driver-container__intervals">
+          <div className="driver-container__intervals--group">
+            <p className="driver-container__intervals--heading">Gap</p>
+            <p className="driver-container__intervals--interval">
+              <strong>{interval}</strong>s
+            </p>
+          </div>
+          <div className="driver-container__intervals--group">
+            <p className="driver-container__intervals--heading">to 1st</p>
+            <p className="driver-container__intervals--gtl">
+              <strong>{gap_to_leader}</strong>s
+            </p>
+          </div>
+        </div>
+      </div>
       <div className="driver-container__tile"></div>
       <div className="driver-container__tile"></div>
       <div className="driver-container__tile"></div>
