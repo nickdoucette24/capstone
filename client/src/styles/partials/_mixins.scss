@@ -187,3 +187,16 @@
     max-width: 45rem;
   }
 }
+
+@mixin tracker-tile {
+  border-radius: 0.75rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: $white;
+  padding: 1.5rem 1rem;
+  display: flex;
+  border: 2px solid $pitstop-red;
+
+  @include tablet {
+    padding: 1.5rem 2rem;
+  }
+}

@@ -27,7 +27,7 @@ function App() {
     <BrowserRouter>
       <Header user={user} setUser={setUser} />
       <Routes>
-        <Route path="/" element={<WelcomePage />} />
+        <Route path="/" element={<WelcomePage setUser={setUser} />} />
         {user ? (
           <>
             <Route path="/home/:username/:id" element={<ProfilePage />} />
@@ -39,7 +39,7 @@ function App() {
         {user ? (
           <>
             <Route
-              path="/race-weekend/:meetingKey/:sessionKey"
+              path="/race-weekend/:meeting/:session"
               element={<SessionTrackerPage />}
             />
           </>

@@ -4,10 +4,14 @@ import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import heroImage from "../../assets/images/photos/hero-img.png";
 import "./WelcomePage.scss";
 
-const WelcomePage = () => {
+const WelcomePage = ({ setUser }) => {
   const location = useLocation();
 
   useEffect(() => {
+    // Scroll to top when the component mounts
+    window.scrollTo(0, 0);
+
+    // Scroll to the create an account section
     if (location.state && location.state.scrollToRegister) {
       const registerContainer = document.querySelector(".register-container");
       if (registerContainer) {
@@ -21,9 +25,12 @@ const WelcomePage = () => {
   return (
     <section className="landing-page">
       <div className="heading-container">
-        <h1 className="hero-container__heading--top">
+        <h1 className="heading-container__title--top">
           enhance your race experience
         </h1>
+        <div className="heading-container__image--mobile"></div>
+        <div className="heading-container__image--tablet1"></div>
+        <div className="heading-container__image--tablet2"></div>
       </div>
       <div className="landing-page__container">
         <div className="hero-wrapper">
@@ -37,7 +44,7 @@ const WelcomePage = () => {
             </div>
             <div className="hero-container__description">
               <div className="heading-container">
-                <h1 className="hero-container__heading--middle">
+                <h1 className="heading-container__title--middle">
                   enhance your race experience
                 </h1>
               </div>
@@ -82,11 +89,12 @@ const WelcomePage = () => {
               </div>
             </div>
           </div>
+          <div className="heading-container__image--desktop"></div>
         </div>
         <div className="register-container">
           <h4 className="register-container__heading">Create an account</h4>
           <div className="register-form__section">
-            <RegisterForm />
+            <RegisterForm setUser={setUser} />
           </div>
         </div>
       </div>

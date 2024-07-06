@@ -7,7 +7,7 @@ const liveUrl = "https://api.openf1.org/v1";
 router.get("/drivers", async (_req, res) => {
   try {
     // Make a GET request to the OpenF1 API
-    const response = await axios.get(`${liveUrl}/drivers`);
+    const response = await axios.get(`${liveUrl}/drivers?session_key=latest`);
     const driversData = response.data;
 
     // Reduce driversData to get the most recent session for each driver
@@ -32,17 +32,22 @@ router.get("/drivers", async (_req, res) => {
       meeting_key: driver.meeting_key,
       headshot_url: driver.headshot_url,
       team_colour: driver.team_colour,
+      country_code: driver.country_code,
       team_name: driver.team_name,
     }));
 
-    // Sort the drivers by session_key in descending order, making sure there are only 20
-    // This shows the most recent 20 drivers who took part in the most recent race session
-    const sortedDrivers = drivers
-      .sort((a, b) => b.session_key - a.session_key)
-      .slice(0, 20);
+    // Get the highest session key
+    const highestSessionKey = Math.max(
+      ...drivers.map((driver) => driver.session_key)
+    );
+
+    // Filter drivers to include only those with the highest session key
+    const filteredDrivers = drivers.filter(
+      (driver) => driver.session_key === highestSessionKey
+    );
 
     // Send the transformed data to the client
-    res.status(200).json(sortedDrivers);
+    res.status(200).json(filteredDrivers);
   } catch (error) {
     console.error("Unable to get driver data: ", error);
     return res.status(500).json({
@@ -111,7 +116,13 @@ router.get("/intervals", async (req, res) => {
     );
     const intervalData = response.data;
 
-    return res.status(200).json(intervalData);
+    // Sort the array by date in descending order and return the most recent interval
+    const sortedIntervals = intervalData.sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
+    const mostRecentInterval = sortedIntervals[0];
+
+    return res.status(200).json(mostRecentInterval);
   } catch (error) {
     console.error("Unable to get interval data: ", error);
     return res.status(500).json({

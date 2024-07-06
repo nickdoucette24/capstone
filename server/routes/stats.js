@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const axios = require("axios");
+const knex = require("knex")(require("../knexfile"));
 require("dotenv").config();
 
 const { API_F1_KEY } = process.env;
@@ -111,15 +112,28 @@ router.get("/track-maps", async (req, res) => {
       id: track.id,
       name: track.name,
       image: track.image,
-      competition: {
-        id: track.competition.id,
-        name: track.competition.name,
-      },
+      first_grand_prix: track.first_grand_prix,
+      laps: track.laps,
+      length: track.length,
+      race_distance: track.race_distance,
     }));
 
     return res.status(200).json(formattedTrackMaps);
   } catch (error) {
     console.error("Error getting Driver Standings: ", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
+// Route to get Circuit Mappings
+router.get("/circuit-mappings", async (_req, res) => {
+  try {
+    const circuitMappings = await knex("circuits").select("*");
+    res.status(200).json(circuitMappings);
+  } catch (error) {
+    console.error("Error retrieving circuit mappings: ", error);
     res.status(500).json({
       message: "Internal Server Error",
     });

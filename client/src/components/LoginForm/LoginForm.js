@@ -122,6 +122,7 @@ const LoginForm = ({ handleLoginModalClose, setUser }) => {
           value={formValues.password}
         />
         {errors.password && <FormErrorMessage message={errors.password} />}
+        {errors.form && <FormErrorMessage message={errors.form} />}
       </div>
       <button className="login-form__button" onSubmit={handleSubmit}>
         <span className="login-form__button--text">Login</span>

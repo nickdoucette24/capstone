@@ -8,7 +8,7 @@ import "./RegisterForm.scss";
 
 const url = process.env.REACT_APP_SERVER_URL;
 
-const RegisterForm = ({ handleRegisterModalClose, handleMenuClose }) => {
+const RegisterForm = ({ setUser }) => {
   const [errors, setErrors] = useState({});
   const [selectedTeam, setSelectedTeam] = useState("");
   const [formValues, setFormValues] = useState({
@@ -101,15 +101,41 @@ const RegisterForm = ({ handleRegisterModalClose, handleMenuClose }) => {
       );
 
       if (response.data.success) {
-        const { username, id, token } = response.data;
+        const { token } = response.data;
         localStorage.setItem("token", token);
-        navigate(`/home/${username}/${id}`);
+        const userInfo = {
+          username: response.data.username,
+          id: response.data.id,
+        };
+        localStorage.setItem("user", JSON.stringify(userInfo));
+        setUser(userInfo);
+        setTimeout(() => {
+          navigate(`/home/${response.data.username}/${response.data.id}`);
+        }, 200);
       } else {
         setErrors({ form: response.data.message });
       }
     } catch (error) {
       console.error("Error Registering User: ", error);
     }
+    //   if (response.data.success) {
+    //     localStorage.setItem("token", response.data.token);
+    //     const userInfo = {
+    //       username: response.data.username,
+    //       id: response.data.id,
+    //     };
+    //     localStorage.setItem("user", JSON.stringify(userInfo));
+    //     setUser(userInfo);
+    //     handleLoginModalClose();
+    //     setTimeout(() => {
+    //       navigate(`/home/${response.data.username}/${response.data.id}`);
+    //     }, 200);
+    //   } else {
+    //     setErrors({ form: response.data.message });
+    //   }
+    // } catch (error) {
+    //   setErrors({ form: "Invalid login credentials." });
+    // }
   };
 
   const teamList = [

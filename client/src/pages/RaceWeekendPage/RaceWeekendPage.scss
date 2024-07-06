@@ -20,9 +20,19 @@
   &__title {
     display: flex;
     flex-direction: column;
+    background-color: $white;
+    border-radius: 0.75rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 1rem 2rem 2rem 2rem;
+    margin-top: 1rem;
+    transition: box-shadow 0.2s ease-in-out;
+
+    &:hover {
+      box-shadow: $pitstop-red 0px 3px 8px;
+    }
 
     &--grandprix {
-      margin: 1.5rem 0 0.5rem 0;
+      margin: 0.5rem 0;
       color: $pitstop-hoverLightBlue;
     }
 

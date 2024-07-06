@@ -24,6 +24,158 @@
 .heading-container {
   background-color: $pitstop-hero;
   width: 100%;
+
+  &__image {
+    &--mobile {
+      width: 100%;
+      position: absolute;
+      top: 5.5rem;
+      height: 19rem;
+      z-index: 0;
+      opacity: 0.5;
+      background-image: url("../../assets/images/photos/alonso_2.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-position-y: bottom;
+      background-size: contain;
+      align-items: center;
+
+      @include tablet {
+        display: none;
+      }
+    }
+
+    &--tablet1 {
+      display: none;
+
+      @include tablet {
+        display: block;
+        width: 100%;
+        position: absolute;
+        top: 9.5rem;
+        height: 21rem;
+        z-index: 0;
+        opacity: 0.5;
+        background-image: url("../../assets/images/photos/verstappen_1.svg");
+        background-repeat: no-repeat;
+        background-position: left;
+        background-position-y: bottom;
+        background-size: contain;
+        align-items: center;
+      }
+
+      @include laptop {
+        display: none;
+      }
+    }
+
+    &--tablet2 {
+      display: none;
+
+      @include tablet {
+        display: block;
+        width: 100%;
+        position: absolute;
+        top: 9.5rem;
+        height: 21rem;
+        z-index: 0;
+        opacity: 0.5;
+        background-image: url("../../assets/images/photos/alonso_1.svg");
+        background-repeat: no-repeat;
+        background-position: right;
+        background-position-y: bottom;
+        background-size: contain;
+        align-items: center;
+      }
+
+      @include laptop {
+        display: none;
+      }
+    }
+
+    &--desktop {
+      display: none;
+
+      @include laptop {
+        display: block;
+        position: absolute;
+        width: 100%;
+        top: 7.24rem;
+        height: 45rem;
+        z-index: 0;
+        opacity: 0.5;
+        background-image: url("../../assets/images/photos/verstappen_3.svg");
+        background-repeat: no-repeat;
+        background-position: right;
+        background-position-y: bottom;
+        background-size: contain;
+        align-items: center;
+      }
+    }
+  }
+
+  &__title {
+    &--top {
+      line-height: 2.75rem;
+      padding: 5rem 2rem;
+      margin: 0;
+      text-shadow: 0px 0px 3px $pitstop-red;
+      color: $pitstop-yellow;
+      min-height: 9rem;
+      line-height: 3rem;
+      font-size: 2.75rem;
+      font-weight: 800;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 1;
+      @include flex-center;
+
+      @include tablet {
+        padding: 8rem 0;
+        font-size: 4rem;
+        line-height: 4.5rem;
+        width: 100%;
+      }
+
+      @include laptop {
+        display: none;
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    &--middle {
+      display: none;
+      padding: 5rem 1rem;
+      background-color: $pitstop-hero;
+      margin: 0;
+      color: $pitstop-yellow;
+      line-height: 3rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      @include tablet {
+        padding: 8rem 0;
+        width: 100%;
+      }
+
+      @include laptop {
+        display: block;
+        box-shadow: none;
+        font-size: 4rem;
+        text-shadow: 0px 0px 3px $pitstop-red;
+        font-weight: 700;
+        position: relative;
+        background-color: transparent;
+        z-index: 4;
+        padding: 0;
+        margin-bottom: 1.5rem;
+        line-height: 3.5rem;
+      }
+    }
+  }
 }
 
 // Hero Styling
@@ -56,55 +208,6 @@
     }
   }
 
-  &__heading {
-    &--top {
-      padding: 5rem 2rem;
-      margin: 0;
-      color: $pitstop-yellow;
-      line-height: 3rem;
-      font-size: 2.75rem;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-      @include tablet {
-        padding: 8rem 0;
-        font-size: 4rem;
-        width: 100%;
-      }
-
-      @include laptop {
-        display: none;
-        box-shadow: none;
-        padding: 0;
-        margin-bottom: 1.5rem;
-      }
-    }
-
-    &--middle {
-      display: none;
-      padding: 5rem 1rem;
-      background-color: $pitstop-hero;
-      margin: 0;
-      color: $pitstop-yellow;
-      line-height: 3rem;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-      @include tablet {
-        padding: 8rem 0;
-        width: 100%;
-      }
-
-      @include laptop {
-        display: block;
-        box-shadow: none;
-        font-size: 3rem;
-        padding: 0;
-        margin-bottom: 1.5rem;
-      }
-    }
-  }
-
   &__image {
     width: 100%;
     max-width: 43rem;
@@ -126,26 +229,43 @@
   }
 
   @include laptop {
-    padding-right: 0;
+    position: relative;
+    z-index: 4;
+    padding: 1rem 2.25rem 2.25rem 3.25rem;
     margin-bottom: 0;
+    background-color: $white;
+    border-radius: 0.75rem;
+    box-shadow: 2px 2px 10px $pitstop-yellow;
+    transition: box-shadow 0.2s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 2px 10px $pitstop-red;
+    }
   }
 
   &__heading {
     text-align: center;
-    margin: 2rem 0;
+    margin: 3rem 0 2rem 0;
+
+    @include tablet {
+      margin: 3rem 0 1rem 0;
+    }
 
     @include laptop {
-      margin-top: 0;
+      margin: 2rem 0 0 0;
       color: $white;
-      margin-bottom: 1rem;
     }
   }
 
   &__item {
     margin: 1rem 0;
 
+    @include tablet {
+      font-size: 1.2rem;
+    }
+
     @include laptop {
-      color: $white;
+      color: $pitstop-activeLightBlue;
       font-size: 1.25rem;
       margin: 1.25rem 0 0 0;
     }
@@ -161,7 +281,7 @@
       transition: color 0.2s ease;
 
       @include laptop {
-        color: $pitstop-yellow;
+        color: $pitstop-hero;
       }
 
       &:hover {
