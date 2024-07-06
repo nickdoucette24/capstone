@@ -329,4 +329,19 @@ router.get("/stints", async (req, res) => {
   }
 });
 
+// Route for retrieving all prior races this season
+router.get("/past-races", async (req, res) => {
+  const { year } = req.query;
+
+  try {
+    const response = await axios.get(`${liveUrl}/meetings?year=${year}`);
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error("Unable to get past races: ", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
 module.exports = router;
