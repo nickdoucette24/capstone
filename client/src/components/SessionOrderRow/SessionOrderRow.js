@@ -50,20 +50,24 @@ const SessionOrderRow = ({ driver }) => {
       <div className="driver-container__tile">
         <div className="driver-container__intervals">
           <div className="driver-container__intervals--group">
-            <p className="driver-container__intervals--heading">Gap</p>
+            <h4 className="driver-container__intervals--heading">Gap</h4>
             <p className="driver-container__intervals--interval">
               <strong>{interval}</strong>s
             </p>
           </div>
           <div className="driver-container__intervals--group">
-            <p className="driver-container__intervals--heading">to 1st</p>
+            <h4 className="driver-container__intervals--heading">to 1st</h4>
             <p className="driver-container__intervals--gtl">
               <strong>{gap_to_leader}</strong>s
             </p>
           </div>
         </div>
       </div>
-      <div className="driver-container__tile"></div>
+      <div className="driver-container__tile">
+        <div className="driver-container__pitstops">
+          <h4 className="driver-container__pitstops--heading">Pitstops</h4>
+        </div>
+      </div>
       <div className="driver-container__tile"></div>
       <div className="driver-container__tile"></div>
     </div>

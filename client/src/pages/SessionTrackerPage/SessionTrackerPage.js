@@ -81,7 +81,10 @@ const SessionTrackerPage = () => {
   const [trackDetails, setTrackDetails] = useState({});
   const [weatherData, setWeatherData] = useState({});
   const [drivers, setDrivers] = useState([]);
-  const { session } = useParams();
+  const [driverStandings, setDriverStandings] = useState([]);
+  const [constructorStandings, setConstructorStandings] = useState([]);
+  const [showStandings, setShowStandings] = useState("driver");
+  const { session: sessionKey } = useParams();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -118,6 +121,24 @@ const SessionTrackerPage = () => {
       }
     };
 
+    const getDriverStandings = async () => {
+      try {
+        const response = await axios.get(`${url}/stats/driver-standings`);
+        setDriverStandings(response.data.DriverStandings);
+      } catch (error) {
+        console.error("Error retrieving driver standings: ", error);
+      }
+    };
+
+    const getConstructorStandings = async () => {
+      try {
+        const response = await axios.get(`${url}/stats/Constructor-standings`);
+        setConstructorStandings(response.data.ConstructorStandings);
+      } catch (error) {
+        console.error("Error retrieving constructor standings: ", error);
+      }
+    };
+
     const getCurrentRaceDetails = async () => {
       try {
         const response = await axios.get(`${url}/live/race-details`);
@@ -132,9 +153,9 @@ const SessionTrackerPage = () => {
           if (circuit) {
             setTrackMap(trackImages[circuit.circuit_short_name]);
             getTrackMapAndDetails(circuit.id);
-            getWeatherData(session);
+            getWeatherData(sessionKey);
             // const interval = setInterval(() => {
-            //   getWeatherData(session);
+            //   getWeatherData(sessionKey);
             // }, 65000);
 
             // return () => clearInterval(interval);
@@ -148,7 +169,9 @@ const SessionTrackerPage = () => {
     };
 
     getCurrentRaceDetails();
-  }, [session]);
+    getDriverStandings();
+    getConstructorStandings();
+  }, [sessionKey]);
 
   // Session Order Data
   useEffect(() => {
@@ -160,24 +183,30 @@ const SessionTrackerPage = () => {
         const driverPositions = [];
         for (const driver of driverDetails) {
           const driver_number = driver.driver_number;
-          const [positionResponse, intervalResponse] = await Promise.all([
-            axios.get(`${url}/live/positions`, {
-              params: { session_key: session, driver_number },
-            }),
-            axios.get(`${url}/live/intervals`, {
-              params: { session_key: session, driver_number },
-            }),
-          ]);
+          const [positionResponse, intervalResponse, pitstopResponse] =
+            await Promise.all([
+              axios.get(`${url}/live/positions`, {
+                params: { session_key: sessionKey, driver_number },
+              }),
+              axios.get(`${url}/live/intervals`, {
+                params: { session_key: sessionKey, driver_number },
+              }),
+              axios.get(`${url}/live/pitstops`, {
+                params: { session_key: sessionKey, driver_number },
+              }),
+            ]);
 
           driverPositions.push({
             ...driver,
             position: positionResponse.data.position,
             interval: intervalResponse.data.interval,
             gap_to_leader: intervalResponse.data.gap_to_leader,
+            lap_number: pitstopResponse.data.lap_number,
+            pit_duration: pitstopResponse.data.pit_duration,
           });
 
           // Throttle requests
-          await new Promise((resolve) => setTimeout(resolve, 400));
+          await new Promise((resolve) => setTimeout(resolve, 1500));
         }
 
         setDrivers(driverPositions);
@@ -192,7 +221,48 @@ const SessionTrackerPage = () => {
     // }, 20000);
 
     // return () => clearInterval(interval);
-  }, [session]);
+  }, [sessionKey]);
+
+  const renderStandings = () => {
+    if (showStandings === "driver") {
+      return (
+        <div className="standings-list">
+          {driverStandings.map((standing, index) => (
+            <div key={index} className="standings-item">
+              <span className="standings-item__data">{standing.position}</span>
+              <span className="standings-item__data">{`${standing.Driver.first_name} ${standing.Driver.last_name}`}</span>
+              <span className="standings-item__data">
+                <strong>{standing.points}</strong>pts
+              </span>
+              <span>
+                {standing.Constructors.map(
+                  (constructor) => constructor.name
+                ).join(", ")}
+              </span>
+            </div>
+          ))}
+        </div>
+      );
+    } else {
+      return (
+        <div className="standings-list">
+          {constructorStandings.map((constructor, index) => (
+            <div key={index} className="standings-item">
+              <span className="standings-item__data">
+                {constructor.position}
+              </span>
+              <span className="standings-item__data">
+                {constructor.Constructor.name}
+              </span>
+              <span>
+                <strong>{constructor.points}</strong>pts
+              </span>
+            </div>
+          ))}
+        </div>
+      );
+    }
+  };
 
   return (
     <div className="session-tracker">
@@ -220,7 +290,7 @@ const SessionTrackerPage = () => {
             />
           </div>
           <div className="tracker-container__track">
-            <h4 className="tracker-container__track--title">Track Details</h4>
+            <h3 className="tracker-container__track--title">Track Details</h3>
             <div>
               <p className="tracker-container__track--stat">
                 Track Name:{" "}
@@ -279,8 +349,54 @@ const SessionTrackerPage = () => {
           </div>
         </div>
         <div className="tracker-container__group">
-          <div className="tracker-container__weather"></div>
-          <div className="tracker-container__standings"></div>
+          <div className="tracker-container__weather">
+            <h3 className="tracker-container__weather--heading">Weather</h3>
+            <div className="tracker-container__weather--content">
+              <div className="tracker-container__weather--group">
+                <p className="tracker-container__weather--stat">
+                  Air Temp:{" "}
+                  <strong>{`${weatherData.air_temperature}°C`}</strong>
+                </p>
+                <p className="tracker-container__weather--stat">
+                  Wind Direction:{" "}
+                  <strong>{`${weatherData.wind_direction}`}</strong>
+                </p>
+                <p className="tracker-container__weather--stat">
+                  Wind Speed: <strong>{`${weatherData.wind_speed}m/s`}</strong>
+                </p>
+              </div>
+              <div className="tracker-container__weather--group">
+                <p className="tracker-container__weather--stat">
+                  Humidity: <strong>{`${weatherData.humidity}%`}</strong>
+                </p>
+                <p className="tracker-container__weather--stat">
+                  Rainfall: <strong>{`${weatherData.rainfall}`}</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="tracker-container__standings">
+            <h3 className="tracker-container__standings--heading">Standings</h3>
+            <div className="tracker-standings__buttons">
+              <button
+                className={`tracker-standings__buttons--driver ${
+                  showStandings === "driver" ? "active" : ""
+                }`}
+                onClick={() => setShowStandings("driver")}
+              >
+                Driver
+              </button>
+              <button
+                className={`tracker-standings__buttons--constructor ${
+                  showStandings === "constructor" ? "active" : ""
+                }`}
+                onClick={() => setShowStandings("constructor")}
+              >
+                Constructor
+              </button>
+            </div>
+            {renderStandings()}
+          </div>
         </div>
       </div>
     </div>

@@ -36,14 +36,18 @@ router.get("/drivers", async (_req, res) => {
       team_name: driver.team_name,
     }));
 
-    // Sort the drivers by session_key in descending order, making sure there are only 20
-    // This shows the most recent 20 drivers who took part in the most recent race session
-    const sortedDrivers = drivers
-      .sort((a, b) => b.session_key - a.session_key)
-      .slice(0, 20);
+    // Get the highest session key
+    const highestSessionKey = Math.max(
+      ...drivers.map((driver) => driver.session_key)
+    );
+
+    // Filter drivers to include only those with the highest session key
+    const filteredDrivers = drivers.filter(
+      (driver) => driver.session_key === highestSessionKey
+    );
 
     // Send the transformed data to the client
-    res.status(200).json(sortedDrivers);
+    res.status(200).json(filteredDrivers);
   } catch (error) {
     console.error("Unable to get driver data: ", error);
     return res.status(500).json({
