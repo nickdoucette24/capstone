@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
-import heroImage from "../../assets/images/photos/hero-img.png";
+import heroImage from "../../assets/images/photos/example-tracker.png";
 import "./WelcomePage.scss";
 
 const WelcomePage = ({ setUser }) => {

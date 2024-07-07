@@ -75,18 +75,24 @@ router.get("/car-data", async (req, res) => {
     );
     const carData = response.data;
 
-    // Format the response data
-    const formattedData = carData.map((update) => ({
-      driver_number: update.driver_number,
-      brake: update.brake,
-      date: update.date,
-      drs: update.drs,
-      meeting_key: update.meeting_key,
-      n_gear: update.n_gear,
-      session_key: update.session_key,
-      speed: update.speed,
-      throttle: update.throttle,
-    }));
+    // Sort the car data by date to get the most recent entry
+    const sortedCarData = carData.sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
+    const mostRecentCarData = sortedCarData[0];
+
+    // Format the most recent car data
+    const formattedData = {
+      driver_number: mostRecentCarData.driver_number,
+      brake: mostRecentCarData.brake,
+      date: mostRecentCarData.date,
+      drs: mostRecentCarData.drs,
+      meeting_key: mostRecentCarData.meeting_key,
+      n_gear: mostRecentCarData.n_gear,
+      session_key: mostRecentCarData.session_key,
+      speed: mostRecentCarData.speed,
+      throttle: mostRecentCarData.throttle,
+    };
 
     return res.status(200).json(formattedData);
   } catch (error) {
@@ -194,6 +200,23 @@ router.get("/session-details", async (req, res) => {
     const raceDetails = response.data;
 
     return res.status(200).json(raceDetails);
+  } catch (error) {
+    console.error("Unable to get session details: ", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
+// Route to get Next Session Time
+router.get("/next-session", async (_req, res) => {
+  try {
+    // Make a GET request to the OpenF1 API
+    const response = await axios.get(`${liveUrl}/sessions?session_key=latest`);
+    const sessionDetails = response.data[0];
+    const dateStart = sessionDetails.date_start;
+
+    return res.status(200).json({ date_start: dateStart });
   } catch (error) {
     console.error("Unable to get session details: ", error);
     return res.status(500).json({

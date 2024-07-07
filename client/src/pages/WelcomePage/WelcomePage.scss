@@ -211,10 +211,12 @@
   &__image {
     width: 100%;
     max-width: 43rem;
+    border: 1px solid $pitstop-red;
     border-radius: 8px;
 
     @include laptop {
       width: 32rem;
+      box-shadow: 2px 2px 10px $pitstop-yellow;
     }
   }
 }
@@ -331,6 +333,7 @@
   padding: 2rem 2.25rem;
   border-radius: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  @include tracker-tile;
 
   @include tablet {
     margin: 2.5rem;

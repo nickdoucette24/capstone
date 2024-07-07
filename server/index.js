@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const knex = require("knex")(require("./knexfile"));
 const cors = require("cors");
 require("dotenv").config();
 
@@ -27,6 +28,64 @@ app.get("/teams", async (_req, res) => {
     res.status(500).json({
       message: "Error Getting Current Teams: ",
       success: false,
+    });
+  }
+});
+
+// Basic GET request to get favourite team from MySQL users table
+app.get("/users", async (req, res) => {
+  const { id } = req.query;
+  try {
+    const favouriteTeam = await knex("users")
+      .join("teams", "users.team_id", "teams.id")
+      .select("teams.team_name as favourite_team")
+      .where("users.id", id)
+      .first();
+
+    // Check if the user was found and has a favourite team
+    if (favouriteTeam) {
+      res.status(200).json({
+        message: "Favourite Team retrieved successfully.",
+        success: true,
+        content: favouriteTeam.favourite_team,
+      });
+    } else {
+      res.status(404).json({
+        message: "User not found or no favourite team assigned.",
+        success: false,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Error Getting Favourite Team.",
+      success: false,
+      error: error.message,
+    });
+  }
+});
+
+// Route to Edit Favourite Team
+app.put("/favourite-team", async (req, res) => {
+  const { user_id, team_id } = req.body;
+
+  if (!user_id || !team_id) {
+    return res
+      .status(400)
+      .json("Bad Request: User ID and Team ID are required");
+  }
+
+  try {
+    await knex("users")
+      .where({ id: user_id })
+      .update({ favourite_team_id: team_id });
+
+    return res
+      .status(200)
+      .json({ message: "Favorite team updated successfully" });
+  } catch (error) {
+    console.error("Error updating favorite team: ", error);
+    res.status(500).json({
+      message: "Internal Server Error",
     });
   }
 });
