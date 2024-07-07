@@ -75,7 +75,7 @@ const formatDate = (timestamp) => {
   });
 };
 
-const SessionTrackerPage = ({ socket }) => {
+const SessionTrackerPage = () => {
   const [currentRaceDetails, setCurrentRaceDetails] = useState({});
   const [trackMap, setTrackMap] = useState("");
   const [trackDetails, setTrackDetails] = useState({});
@@ -84,6 +84,7 @@ const SessionTrackerPage = ({ socket }) => {
   const [driverStandings, setDriverStandings] = useState([]);
   const [constructorStandings, setConstructorStandings] = useState([]);
   const [showStandings, setShowStandings] = useState("driver");
+  const [loading, setLoading] = useState(true);
   const { session: sessionKey } = useParams();
 
   useEffect(() => {
@@ -154,6 +155,11 @@ const SessionTrackerPage = ({ socket }) => {
             setTrackMap(trackImages[circuit.circuit_short_name]);
             getTrackMapAndDetails(circuit.id);
             getWeatherData(sessionKey);
+            // const interval = setInterval(() => {
+            //   getWeatherData(sessionKey);
+            // }, 65000);
+
+            // return () => clearInterval(interval);
           } else {
             console.error("No matching circuit found for the circuit key");
           }
@@ -166,21 +172,7 @@ const SessionTrackerPage = ({ socket }) => {
     getCurrentRaceDetails();
     getDriverStandings();
     getConstructorStandings();
-
-    // Set up socket.io listeners
-    socket.on("weatherUpdate", (data) => {
-      setWeatherData(data);
-    });
-
-    socket.on("raceDetailsUpdate", (data) => {
-      setCurrentRaceDetails(data);
-    });
-
-    return () => {
-      socket.off("weatherUpdate");
-      socket.off("raceDetailsUpdate");
-    };
-  }, [sessionKey, socket]);
+  }, [sessionKey]);
 
   // Session Order Data
   useEffect(() => {
@@ -192,41 +184,36 @@ const SessionTrackerPage = ({ socket }) => {
         const driverPositions = [];
         for (const driver of driverDetails) {
           const driver_number = driver.driver_number;
-          const [positionResponse, intervalResponse, pitstopResponse] =
-            await Promise.all([
-              axios.get(`${url}/live/positions`, {
-                params: { session_key: sessionKey, driver_number },
-              }),
-              axios.get(`${url}/live/intervals`, {
-                params: { session_key: sessionKey, driver_number },
-              }),
-              axios.get(`${url}/live/pitstops`, {
-                params: { session_key: sessionKey, driver_number },
-              }),
-            ]);
+          const [positionResponse] = await Promise.all([
+            axios.get(`${url}/live/positions`, {
+              params: { session_key: sessionKey, driver_number },
+            }),
+          ]);
 
           driverPositions.push({
             ...driver,
             position: positionResponse.data.position,
-            interval: intervalResponse.data.interval,
-            gap_to_leader: intervalResponse.data.gap_to_leader,
-            lap_number: pitstopResponse.data.lap_number,
-            pit_duration: pitstopResponse.data.pit_duration,
           });
+
+          // Throttle requests
+          // await new Promise((resolve) => setTimeout(resolve, 200));
         }
 
         setDrivers(driverPositions);
+        setLoading(false);
       } catch (error) {
         console.error("Error retrieving driver details: ", error);
+        setLoading(false);
       }
     };
 
     getDriverDetails();
+    // const interval = setInterval(() => {
+    //   getDriverDetails();
+    // }, 20000);
 
-    return () => {
-      socket.off("driversUpdate");
-    };
-  }, [sessionKey, socket]);
+    // return () => clearInterval(interval);
+  }, [sessionKey]);
 
   const renderStandings = () => {
     if (showStandings === "driver") {
@@ -341,14 +328,18 @@ const SessionTrackerPage = ({ socket }) => {
             <h3 className="tracker-container__order--heading">
               Order on Track
             </h3>
-            {drivers.length > 0 &&
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              drivers.length > 0 &&
               drivers
                 .sort((a, b) => a.position - b.position)
                 .map((driver) => (
                   <div className="driver-tile" key={driver.driver_number}>
-                    <SessionOrderRow driver={driver} />
+                    <SessionOrderRow driver={driver} sessionKey={sessionKey} />
                   </div>
-                ))}
+                ))
+            )}
           </div>
         </div>
         <div className="tracker-container__group">

@@ -1,25 +1,10 @@
 const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
+const app = express();
 const knex = require("knex")(require("./knexfile"));
 const cors = require("cors");
 require("dotenv").config();
 
 const { PORT, CORS_ORIGIN } = process.env;
-
-// Initialize Express
-const app = express();
-
-// Create HTTP Server
-const server = http.createServer(app);
-
-// Initialize socket.io
-const io = new Server(server, {
-  cors: {
-    origin: CORS_ORIGIN,
-    methods: ["GET", "POST"],
-  },
-});
 
 // Middleware
 app.use(express.json());
@@ -81,23 +66,14 @@ app.get("/users", async (req, res) => {
 
 // API Routes
 const authRoutes = require("./routes/auth");
-const liveRoutes = require("./routes/live")(io);
+const liveRoutes = require("./routes/live");
 const statsRoutes = require("./routes/stats");
 
 app.use("/auth", authRoutes);
 app.use("/live", liveRoutes);
 app.use("/stats", statsRoutes);
 
-// Handle socket.io connections
-io.on("connection", (socket) => {
-  console.log("New User Connected: ", socket.id);
-
-  socket.on("disconnect", () => {
-    console.log("User Disconnected: ", socket.id);
-  });
-});
-
-// Use the `server` instance for both the Express app and Socket.IO
-server.listen(PORT, () => {
-  console.log(`Server is running on PORT: ${PORT}`);
+// Server Initialization
+app.listen(PORT, () => {
+  console.log("Server is running on PORT: " + PORT);
 });
