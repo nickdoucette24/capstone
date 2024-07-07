@@ -78,7 +78,7 @@ const ThisYearPage = () => {
 
   return (
     <div className="this-year">
-      <h1>{year} Formula 1 Season</h1>
+      <h1 className="this-year__heading">{year} Formula 1 Season</h1>
       <div className="this-year__chart-container">
         <div className="standings-buttons">
           <button

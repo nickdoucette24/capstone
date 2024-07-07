@@ -17,6 +17,11 @@
       font-weight: 700;
       font-size: 1.1rem;
       @include flex-center;
+
+      @include tablet {
+        font-size: 1.5rem;
+        min-width: 1.75rem;
+      }
     }
   }
 
@@ -95,6 +100,10 @@
 
     &--headshot {
       width: 3.5rem;
+
+      @include tablet {
+        width: 5rem;
+      }
     }
 
     &--nationality {

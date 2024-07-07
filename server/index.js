@@ -64,6 +64,32 @@ app.get("/users", async (req, res) => {
   }
 });
 
+// Route to Edit Favourite Team
+app.put("/favourite-team", async (req, res) => {
+  const { user_id, team_id } = req.body;
+
+  if (!user_id || !team_id) {
+    return res
+      .status(400)
+      .json("Bad Request: User ID and Team ID are required");
+  }
+
+  try {
+    await knex("users")
+      .where({ id: user_id })
+      .update({ favourite_team_id: team_id });
+
+    return res
+      .status(200)
+      .json({ message: "Favorite team updated successfully" });
+  } catch (error) {
+    console.error("Error updating favorite team: ", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
 // API Routes
 const authRoutes = require("./routes/auth");
 const liveRoutes = require("./routes/live");

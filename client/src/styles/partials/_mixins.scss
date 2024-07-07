@@ -195,8 +195,14 @@
   padding: 1.5rem 1rem;
   display: flex;
   border: 2px solid $pitstop-red;
+  transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
 
   @include tablet {
     padding: 1.5rem 2rem;
+  }
+
+  &:hover {
+    box-shadow: $pitstop-hero 0px 3px 8px;
+    border-color: $pitstop-activeLightBlue;
   }
 }

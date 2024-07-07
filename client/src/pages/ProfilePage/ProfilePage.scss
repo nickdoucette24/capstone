@@ -9,11 +9,37 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  margin-bottom: 3rem;
 
-  &__content {
+  @include laptop {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  &__content-one {
     width: 100%;
     max-width: 35rem;
-    margin-bottom: 2rem;
+
+    @include laptop {
+      order: 1;
+      margin-top: 2rem;
+    }
+
+    &--top {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+
+  &__content-two {
+    width: 100%;
+    max-width: 35rem;
+
+    @include laptop {
+      order: 3;
+      margin-top: 2rem;
+    }
 
     &--top {
       display: flex;
@@ -25,6 +51,10 @@
   &__current {
     @include tracker-tile;
     flex-direction: column;
+    margin-top: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 35rem;
 
     &--gp {
       margin: 0 0 0.5rem 0;
@@ -54,6 +84,18 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: 100%;
+
+  @include laptop {
+    order: 2;
+    margin-top: 4rem;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
   &__user {
     margin: 1rem 0 0 0;

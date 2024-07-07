@@ -36,7 +36,7 @@ const ProfilePage = () => {
 
     const getConstructorStandings = async () => {
       try {
-        const response = await axios.get(`${url}/stats/Constructor-standings`);
+        const response = await axios.get(`${url}/stats/constructor-standings`);
         setConstructorStandings(response.data.ConstructorStandings);
       } catch (error) {
         console.error("Error retrieving constructor standings: ", error);
@@ -81,25 +81,27 @@ const ProfilePage = () => {
   return (
     <div className="profile-page">
       <div className="profile-details">
-        <h1 className="profile-details__user">{username}</h1>
-        <h3 className="profile-details__team">{favouriteTeam}</h3>
+        <div className="profile-details__group">
+          <h1 className="profile-details__user">{username}</h1>
+          <h3 className="profile-details__team">{favouriteTeam}</h3>
+        </div>
+        <div className="profile-page__current">
+          <h2 className="profile-page__current--gp">
+            {currentRaceDetails.meeting_name}
+          </h2>
+          <h3 className="profile-page__current--circuit">
+            Circuit Name: {currentRaceDetails.circuit_short_name}
+          </h3>
+          <h3 className="profile-page__current--location">
+            {currentRaceDetails.location}, {currentRaceDetails.country_name}
+          </h3>
+          <h4 className="profile-page__current--time">
+            Current Session Start: {nextSession}
+          </h4>
+        </div>
       </div>
-      <div className="profile-page__content">
+      <div className="profile-page__content-one">
         <div className="profile-page__content--top">
-          <div className="profile-page__current">
-            <h2 className="profile-page__current--gp">
-              {currentRaceDetails.meeting_name}
-            </h2>
-            <h3 className="profile-page__current--circuit">
-              Circuit Name: {currentRaceDetails.circuit_short_name}
-            </h3>
-            <h3 className="profile-page__current--location">
-              {currentRaceDetails.location}, {currentRaceDetails.country_name}
-            </h3>
-            <h4 className="profile-page__current--time">
-              Current Session Start: {nextSession}
-            </h4>
-          </div>
           <div className="tracker-container__standings">
             <h3 className="tracker-container__standings--profile-heading">
               Driver Standings
@@ -119,6 +121,10 @@ const ProfilePage = () => {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+      <div className="profile-page__content-two">
+        <div className="profile-page__content--top">
           <div className="tracker-container__standings">
             <h3 className="tracker-container__standings--profile-heading">
               Constructor Standings
@@ -138,10 +144,10 @@ const ProfilePage = () => {
             ))}
           </div>
         </div>
-        <div className="profile-page__content--bottom">
-          <div></div>
-        </div>
       </div>
+      {/* <div className="profile-page__content--bottom">
+          <div></div>
+        </div> */}
     </div>
   );
 };

@@ -169,13 +169,6 @@ const SessionTrackerPage = () => {
       }
     };
 
-    getCurrentRaceDetails();
-    getDriverStandings();
-    getConstructorStandings();
-  }, [sessionKey]);
-
-  // Session Order Data
-  useEffect(() => {
     const getDriverDetails = async () => {
       try {
         const response = await axios.get(`${url}/live/drivers`);
@@ -208,11 +201,9 @@ const SessionTrackerPage = () => {
     };
 
     getDriverDetails();
-    // const interval = setInterval(() => {
-    //   getDriverDetails();
-    // }, 20000);
-
-    // return () => clearInterval(interval);
+    getCurrentRaceDetails();
+    getDriverStandings();
+    getConstructorStandings();
   }, [sessionKey]);
 
   const renderStandings = () => {
@@ -257,7 +248,7 @@ const SessionTrackerPage = () => {
   return (
     <div className="session-tracker">
       <div className="tracker-container">
-        <div className="tracker-container__group">
+        <div className="tracker-container__group-one">
           <div className="tracker-container__race">
             <h2 className="tracker-container__race--name">
               {currentRaceDetails.meeting_name}
@@ -323,7 +314,7 @@ const SessionTrackerPage = () => {
             </div>
           </div>
         </div>
-        <div className="tracker-container__group">
+        <div className="tracker-container__group-two">
           <div className="tracker-container__order">
             <h3 className="tracker-container__order--heading">
               Order on Track
@@ -342,7 +333,7 @@ const SessionTrackerPage = () => {
             )}
           </div>
         </div>
-        <div className="tracker-container__group">
+        <div className="tracker-container__group-three">
           <div className="tracker-container__weather">
             <h3 className="tracker-container__weather--heading">Weather</h3>
             <div className="tracker-container__weather--content">
