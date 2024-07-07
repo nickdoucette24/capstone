@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import io from "socket.io-client";
 import Header from "./components/Header/Header";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
@@ -8,6 +9,9 @@ import SessionTrackerPage from "./pages/SessionTrackerPage/SessionTrackerPage";
 import ThisYearPage from "./pages/ThisYearPage/ThisYearPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import "./App.scss";
+
+// Initialize socket.io client side
+const socket = io.connect(process.env.REACT_APP_SERVER_URL);
 
 // Main App Component
 function App() {
@@ -21,6 +25,20 @@ function App() {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
+
+    // Handle connection and disconnection
+    socket.on("connect", () => {
+      console.log("New User Connected to Server");
+    });
+
+    socket.on("disconnect", () => {
+      console.log("User Disconnected from Server");
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("disconnect");
+    };
   }, []);
 
   return (
@@ -30,23 +48,29 @@ function App() {
         <Route path="/" element={<WelcomePage setUser={setUser} />} />
         {user ? (
           <>
-            <Route path="/home/:username/:id" element={<ProfilePage />} />
-          </>
-        ) : (
-          <Route path="/" element={<WelcomePage />} />
-        )}
-        <Route path="/race-weekend" element={<RaceWeekendPage />} />
-        {user ? (
-          <>
             <Route
-              path="/race-weekend/:meeting/:session"
-              element={<SessionTrackerPage />}
+              path="/home/:username/:id"
+              element={<ProfilePage socket={socket} />}
             />
           </>
         ) : (
           <Route path="/" element={<WelcomePage />} />
         )}
-        <Route path="/this-year" element={<ThisYearPage />} />
+        <Route
+          path="/race-weekend"
+          element={<RaceWeekendPage socket={socket} />}
+        />
+        {user ? (
+          <>
+            <Route
+              path="/race-weekend/:meeting/:session"
+              element={<SessionTrackerPage socket={socket} />}
+            />
+          </>
+        ) : (
+          <Route path="/" element={<WelcomePage />} />
+        )}
+        <Route path="/this-year" element={<ThisYearPage socket={socket} />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

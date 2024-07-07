@@ -5,14 +5,11 @@ const SessionOrderRow = ({ driver }) => {
     driver_number,
     full_name,
     headshot_url,
-    name_acronym,
     team_name,
     country_code,
     position,
     interval,
     gap_to_leader,
-    session_key,
-    meeting_key,
   } = driver;
 
   const formattedFirstName = full_name.split(" ")[0];

@@ -5,7 +5,7 @@ import "./ThisYearPage.scss";
 
 const url = process.env.REACT_APP_SERVER_URL;
 
-const ThisYearPage = () => {
+const ThisYearPage = ({ socket }) => {
   const [driverStandings, setDriverStandings] = useState([]);
   const [constructorStandings, setConstructorStandings] = useState([]);
   const [year, setYear] = useState("");
@@ -46,7 +46,16 @@ const ThisYearPage = () => {
 
     getDriverStandings();
     getConstructorStandings();
-  }, []);
+
+    // Set up socket.io listeners
+    socket.on("pastRacesUpdate", (data) => {
+      setPastRaces(data);
+    });
+
+    return () => {
+      socket.off("pastRacesUpdate");
+    };
+  }, [socket]);
 
   const formatDriverChartData = () => {
     const labels = driverStandings.map(

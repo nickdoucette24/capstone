@@ -6,7 +6,7 @@ import "./RaceWeekendPage.scss";
 
 const url = process.env.REACT_APP_SERVER_URL;
 
-const RaceWeekendPage = () => {
+const RaceWeekendPage = ({ socket }) => {
   const [raceWeekend, setRaceWeekend] = useState([]);
   const [currentRaceDetails, setCurrentRaceDetails] = useState({});
   const loggedIn = useAuth();
@@ -35,7 +35,15 @@ const RaceWeekendPage = () => {
 
     getRaceWeekend();
     getCurrentRaceDetails();
-  }, []);
+
+    socket.on("currentWeekendUpdate", (data) => {
+      setRaceWeekend(data);
+    });
+
+    return () => {
+      socket.off("currentWeekendUpdate");
+    };
+  }, [socket]);
 
   // Set the mapping functions variables
   const practiceSessions = raceWeekend.filter(

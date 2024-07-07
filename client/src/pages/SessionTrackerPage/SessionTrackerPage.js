@@ -75,7 +75,7 @@ const formatDate = (timestamp) => {
   });
 };
 
-const SessionTrackerPage = () => {
+const SessionTrackerPage = ({ socket }) => {
   const [currentRaceDetails, setCurrentRaceDetails] = useState({});
   const [trackMap, setTrackMap] = useState("");
   const [trackDetails, setTrackDetails] = useState({});
@@ -154,11 +154,6 @@ const SessionTrackerPage = () => {
             setTrackMap(trackImages[circuit.circuit_short_name]);
             getTrackMapAndDetails(circuit.id);
             getWeatherData(sessionKey);
-            // const interval = setInterval(() => {
-            //   getWeatherData(sessionKey);
-            // }, 65000);
-
-            // return () => clearInterval(interval);
           } else {
             console.error("No matching circuit found for the circuit key");
           }
@@ -171,7 +166,21 @@ const SessionTrackerPage = () => {
     getCurrentRaceDetails();
     getDriverStandings();
     getConstructorStandings();
-  }, [sessionKey]);
+
+    // Set up socket.io listeners
+    socket.on("weatherUpdate", (data) => {
+      setWeatherData(data);
+    });
+
+    socket.on("raceDetailsUpdate", (data) => {
+      setCurrentRaceDetails(data);
+    });
+
+    return () => {
+      socket.off("weatherUpdate");
+      socket.off("raceDetailsUpdate");
+    };
+  }, [sessionKey, socket]);
 
   // Session Order Data
   useEffect(() => {
@@ -204,9 +213,6 @@ const SessionTrackerPage = () => {
             lap_number: pitstopResponse.data.lap_number,
             pit_duration: pitstopResponse.data.pit_duration,
           });
-
-          // Throttle requests
-          await new Promise((resolve) => setTimeout(resolve, 1500));
         }
 
         setDrivers(driverPositions);
@@ -216,12 +222,11 @@ const SessionTrackerPage = () => {
     };
 
     getDriverDetails();
-    // const interval = setInterval(() => {
-    //   getDriverDetails();
-    // }, 20000);
 
-    // return () => clearInterval(interval);
-  }, [sessionKey]);
+    return () => {
+      socket.off("driversUpdate");
+    };
+  }, [sessionKey, socket]);
 
   const renderStandings = () => {
     if (showStandings === "driver") {
@@ -229,16 +234,16 @@ const SessionTrackerPage = () => {
         <div className="standings-list">
           {driverStandings.map((standing, index) => (
             <div key={index} className="standings-item">
-              <span className="standings-item__data">{standing.position}</span>
-              <span className="standings-item__data">{`${standing.Driver.first_name} ${standing.Driver.last_name}`}</span>
-              <span className="standings-item__data">
+              <p className="standings-item__position">{standing.position}</p>
+              <p className="standings-item__driver">{`${standing.Driver.first_name} ${standing.Driver.last_name}`}</p>
+              <p className="standings-item__points">
                 <strong>{standing.points}</strong>pts
-              </span>
-              <span>
+              </p>
+              <p className="standings-item__team">
                 {standing.Constructors.map(
                   (constructor) => constructor.name
                 ).join(", ")}
-              </span>
+              </p>
             </div>
           ))}
         </div>
@@ -248,15 +253,13 @@ const SessionTrackerPage = () => {
         <div className="standings-list">
           {constructorStandings.map((constructor, index) => (
             <div key={index} className="standings-item">
-              <span className="standings-item__data">
-                {constructor.position}
-              </span>
-              <span className="standings-item__data">
+              <p className="standings-item__position">{constructor.position}</p>
+              <p className="standings-item__constructor">
                 {constructor.Constructor.name}
-              </span>
-              <span>
+              </p>
+              <p className="standings-item__total-points">
                 <strong>{constructor.points}</strong>pts
-              </span>
+              </p>
             </div>
           ))}
         </div>
