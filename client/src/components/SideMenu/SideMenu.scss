@@ -9,14 +9,17 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: $pitstop-beige;
+  background-color: $pitstop-yellow;
   border-radius: 0 0 8px 8px;
   z-index: 2;
   transform: translateY(-100%);
   transition: transform 0.3s ease-out;
+  border: 2px solid $white;
+  border-top: none;
+  box-sizing: border-box;
 
   &__open {
-    transform: translateY(51%);
+    transform: translateY(50%);
   }
 
   &__container {
@@ -36,7 +39,7 @@
   }
 
   &__close {
-    background-color: $light-grey;
+    background-color: $pitstop-hero;
     padding: 0.25rem 1rem;
     margin: 0 0 0.5rem 0;
     border-radius: 0 0 8px 8px;
@@ -45,17 +48,17 @@
     font-size: 0.75rem;
     font-weight: 500;
     transition: background-color 0.2s ease-in-out, padding 0.2s;
-    color: $grey;
+    color: $white;
     cursor: pointer;
 
     &:active {
-      background-color: $grey;
+      background-color: $pitstop-hoverLightBlue;
       padding: 0.25rem 1.2rem;
     }
   }
 
   &__heading {
-    color: $grey;
+    color: $pitstop-hero;
     font-weight: 500;
     font-size: 0.75rem;
     margin: 0 0 0.5rem 0;

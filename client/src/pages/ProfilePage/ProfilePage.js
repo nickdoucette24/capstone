@@ -81,9 +81,12 @@ const ProfilePage = () => {
   return (
     <div className="profile-page">
       <div className="profile-details">
-        <div className="profile-details__group">
-          <h1 className="profile-details__user">{username}</h1>
-          <h3 className="profile-details__team">{favouriteTeam}</h3>
+        <div className="profile-details__info">
+          <span className="profile-details__heading">Profile Details</span>
+          <div className="profile-details__content">
+            <h1 className="profile-details__content--user">{username}</h1>
+            <h3 className="profile-details__content--team">{favouriteTeam}</h3>
+          </div>
         </div>
         <div className="profile-page__current">
           <h2 className="profile-page__current--gp">

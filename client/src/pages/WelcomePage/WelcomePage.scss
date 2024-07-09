@@ -100,7 +100,7 @@
         display: block;
         position: absolute;
         width: 100%;
-        top: 7.24rem;
+        top: 7.84rem;
         height: 45rem;
         z-index: 0;
         opacity: 0.5;
@@ -251,6 +251,7 @@
 
     @include tablet {
       margin: 3rem 0 1rem 0;
+      font-size: 2rem;
     }
 
     @include laptop {
@@ -313,6 +314,18 @@
   @include laptop {
     padding: 0;
   }
+
+  &__heading {
+    margin: 0 0 0.5rem 0;
+
+    @include tablet {
+      font-size: 2rem;
+    }
+
+    @include laptop {
+      display: none;
+    }
+  }
 }
 
 .content-container {
@@ -341,11 +354,24 @@
 
   @include laptop {
     width: 63.75rem;
+    box-sizing: border-box;
   }
 
   &__heading {
     margin: 0;
+    color: $pitstop-lightBlue;
+    background-color: transparent;
+    text-shadow: 0px 0px 3px $pitstop-hero;
     font-size: 1.5rem;
+
+    @include tablet {
+      font-size: 1.75rem;
+    }
+
+    @include laptop {
+      font-size: 3rem;
+      font-weight: 700;
+    }
   }
 }
 

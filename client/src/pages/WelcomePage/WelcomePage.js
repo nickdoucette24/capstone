@@ -36,6 +36,7 @@ const WelcomePage = ({ setUser }) => {
         <div className="hero-wrapper">
           <div className="hero-container">
             <div className="image-container">
+              <h3 className="image-container__heading">Live Session Tracker</h3>
               <img
                 className="hero-container__image"
                 src={heroImage}
