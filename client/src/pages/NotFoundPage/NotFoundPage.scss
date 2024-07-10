@@ -1,0 +1,39 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/global/global" as *;
+
+.not-found {
+  padding-top: 5.5rem;
+  @include flex-center;
+
+  &__container {
+    @include tracker-tile;
+    flex-direction: column;
+    margin: 2.5rem 2.5rem 0 2.5rem;
+    text-align: center;
+  }
+
+  &__error {
+    font-size: 3rem;
+    margin: 0;
+    color: $pitstop-hero;
+
+    @include tablet {
+      font-size: 4rem;
+    }
+  }
+
+  &__heading {
+    margin: 1rem 0;
+    color: $pitstop-hoverLightBlue;
+
+    @include tablet {
+      margin: 1.5rem 0;
+    }
+  }
+
+  &__description {
+    margin: 0;
+    font-size: 1rem;
+  }
+}
