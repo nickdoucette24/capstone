@@ -1,0 +1,141 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/global/global" as *;
+
+.this-year {
+  padding-top: 5.5rem;
+  margin: 0 1rem 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  @include tablet {
+    margin: 0 2.5rem 3rem 2.5rem;
+    align-items: center;
+  }
+
+  @include laptop {
+    width: 64.75rem;
+    box-sizing: border-box;
+    margin: auto;
+    margin-bottom: 3rem;
+  }
+
+  &__heading {
+    @include tracker-tile;
+    max-width: 28rem;
+  }
+
+  &__chart-container {
+    // padding: 0.5rem;
+    // border: 1px solid white;
+    // border-radius: 0.5rem;
+    @include tracker-tile;
+    flex-direction: column;
+
+    @include tablet {
+      width: 100%;
+      box-sizing: border-box;
+      max-width: 43.75rem;
+    }
+
+    @include laptop {
+      min-width: 63.75rem;
+    }
+  }
+
+  &__past-races {
+    @include tracker-tile;
+    flex-direction: column;
+    align-items: center;
+
+    @include tablet {
+      width: 100%;
+      box-sizing: border-box;
+      max-width: 43.75rem;
+    }
+
+    @include laptop {
+      min-width: 63.75rem;
+    }
+
+    &--heading {
+      margin: 0 0 1rem 0;
+      width: 100%;
+      color: $pitstop-hero;
+    }
+
+    &--container {
+      width: fit-content;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+
+      @include tablet {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      @include laptop {
+        gap: 1.25rem;
+      }
+    }
+  }
+}
+
+.standings-buttons {
+  display: flex;
+  gap: 1rem;
+
+  &__driver {
+    background: none;
+    border: 1px solid $grey;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    margin: 0.5rem 0;
+    box-shadow: 1px 1px 2px $grey;
+    color: $pitstop-activeLightBlue;
+    cursor: pointer;
+    font-family: Raleway;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+    @include tablet {
+      font-size: 1rem;
+    }
+
+    &:hover {
+      color: $pitstop-hero;
+      transform: scale(1.02);
+      box-shadow: 1px 1px 2px $pitstop-hero;
+    }
+
+    &:active {
+      box-shadow: none;
+      color: $pitstop-activeLightBlue;
+    }
+  }
+
+  &__constructor {
+    @include tab-button;
+  }
+}
+
+.past-race {
+  @include tracker-tile;
+  justify-content: center;
+  cursor: pointer;
+
+  @include tablet {
+    min-width: 13rem;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+
+  &__heading {
+    color: $pitstop-hero;
+  }
+}

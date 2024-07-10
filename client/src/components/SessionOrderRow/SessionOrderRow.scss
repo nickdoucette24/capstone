@@ -1,0 +1,157 @@
+@use "../../styles/global/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+
+.driver-container {
+  display: flex;
+  flex-direction: column;
+
+  &__tile {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    &--position {
+      padding: 0 0.5rem;
+      min-width: 1.3rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      @include flex-center;
+
+      @include tablet {
+        font-size: 1.5rem;
+        min-width: 1.75rem;
+      }
+    }
+  }
+
+  &__tile-grow {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__section {
+    display: flex;
+    align-items: center;
+  }
+
+  &__section-data {
+    display: flex;
+    border-top: 1px solid $grey;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  &__content {
+    height: 100%;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    // border-right: 1px solid $grey;
+    border-left: 1px solid $grey;
+  }
+
+  &__data {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    padding: 0 0.25rem;
+    width: 8rem;
+
+    &--team {
+      padding: 0.25rem 0;
+      margin: 0;
+      border-bottom: 1px solid $grey;
+    }
+
+    &--firstName {
+      padding: 0.25rem 0 0 0;
+      margin: 0;
+    }
+
+    &--lastName {
+      padding: 0.25rem 0;
+      margin: 0;
+      border-bottom: 1px solid $grey;
+    }
+
+    &--number {
+      margin: 0.75rem 0;
+    }
+  }
+
+  &__number--span {
+    padding: 0 0.25rem 0.25rem 0.25rem;
+    width: fit-content;
+    border: 1px solid $grey;
+    border-radius: 0.25rem;
+    margin: 0.25rem;
+  }
+
+  &__visuals {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 1px solid $grey;
+
+    &--headshot {
+      width: 3.5rem;
+
+      @include tablet {
+        width: 5rem;
+      }
+    }
+
+    &--nationality {
+      padding: 0.25rem 0;
+      margin: 0;
+      border-bottom: 1px solid $grey;
+    }
+  }
+
+  &__intervals {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.3rem;
+    width: 4.375rem;
+    padding: 0 0.5rem;
+    height: 100%;
+    // border-right: 1px solid $grey;
+
+    &--group {
+      margin: 0;
+    }
+
+    &--heading {
+      font-size: 0.7rem;
+      margin: 0;
+      border-bottom: 1px solid $grey;
+      font-weight: 700;
+      padding: 0.25rem 0;
+      @include flex-center;
+    }
+
+    &--interval {
+      margin: 0;
+      font-size: 0.7rem;
+      @include flex-center;
+    }
+
+    &--gtl {
+      margin: 0;
+      font-size: 0.7rem;
+      padding-bottom: 0.25rem;
+      @include flex-center;
+    }
+  }
+}
+
+// .mobile-grow {
+//   display: flex;
+//   flex-grow: 1;
+// }

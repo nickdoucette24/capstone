@@ -1,0 +1,477 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/global/global" as *;
+
+// Section Styling
+.landing-page {
+  @include flex-center;
+  flex-direction: column;
+  padding-top: 5.5rem;
+  width: 100%;
+
+  &__container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+
+    @include laptop {
+      align-items: center;
+    }
+  }
+}
+
+.heading-container {
+  background-color: $pitstop-hero;
+  width: 100%;
+
+  &__image {
+    &--mobile {
+      width: 100%;
+      position: absolute;
+      top: 5.5rem;
+      height: 19rem;
+      z-index: 0;
+      opacity: 0.5;
+      background-image: url("../../assets/images/photos/alonso_2.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-position-y: bottom;
+      background-size: contain;
+      align-items: center;
+
+      @include tablet {
+        display: none;
+      }
+    }
+
+    &--tablet1 {
+      display: none;
+
+      @include tablet {
+        display: block;
+        width: 100%;
+        position: absolute;
+        top: 9.5rem;
+        height: 21rem;
+        z-index: 0;
+        opacity: 0.5;
+        background-image: url("../../assets/images/photos/verstappen_1.svg");
+        background-repeat: no-repeat;
+        background-position: left;
+        background-position-y: bottom;
+        background-size: contain;
+        align-items: center;
+      }
+
+      @include laptop {
+        display: none;
+      }
+    }
+
+    &--tablet2 {
+      display: none;
+
+      @include tablet {
+        display: block;
+        width: 100%;
+        position: absolute;
+        top: 9.5rem;
+        height: 21rem;
+        z-index: 0;
+        opacity: 0.5;
+        background-image: url("../../assets/images/photos/alonso_1.svg");
+        background-repeat: no-repeat;
+        background-position: right;
+        background-position-y: bottom;
+        background-size: contain;
+        align-items: center;
+      }
+
+      @include laptop {
+        display: none;
+      }
+    }
+
+    &--desktop {
+      display: none;
+
+      @include laptop {
+        display: block;
+        position: absolute;
+        width: 100%;
+        top: 8.79rem;
+        height: 45rem;
+        z-index: 0;
+        opacity: 0.5;
+        background-image: url("../../assets/images/photos/verstappen_3.svg");
+        background-repeat: no-repeat;
+        background-position: right;
+        background-position-y: bottom;
+        background-size: contain;
+        align-items: center;
+      }
+    }
+  }
+
+  &__title {
+    &--top {
+      line-height: 2.75rem;
+      padding: 5rem 2rem;
+      margin: 0;
+      text-shadow: 0px 0px 3px $pitstop-red;
+      color: $pitstop-yellow;
+      min-height: 9rem;
+      line-height: 3rem;
+      font-size: 2.75rem;
+      font-weight: 800;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 1;
+      @include flex-center;
+
+      @include tablet {
+        padding: 8rem 0;
+        font-size: 4rem;
+        line-height: 4.5rem;
+        width: 100%;
+      }
+
+      @include laptop {
+        display: none;
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    &--middle {
+      display: none;
+      padding: 5rem 1rem;
+      background-color: $pitstop-hero;
+      margin: 0;
+      color: $pitstop-yellow;
+      line-height: 3rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      @include tablet {
+        padding: 8rem 0;
+        width: 100%;
+      }
+
+      @include laptop {
+        display: block;
+        box-shadow: none;
+        font-size: 4rem;
+        text-shadow: 0px 0px 3px $pitstop-red;
+        font-weight: 700;
+        position: relative;
+        background-color: transparent;
+        z-index: 4;
+        padding: 0;
+        margin-bottom: 1.5rem;
+        line-height: 3.5rem;
+      }
+    }
+  }
+}
+
+// Hero Styling
+.hero-container {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+
+  @include laptop {
+    background-color: $pitstop-hero;
+    box-shadow: none;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 63.75rem;
+    margin: 4rem 0;
+    gap: 2.5rem;
+  }
+
+  &__description {
+    width: 100%;
+    background-color: $white;
+
+    @include tablet {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @include laptop {
+      width: 55rem;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    border: 1px solid $pitstop-red;
+    max-width: 43rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+
+    @include tablet {
+      max-width: 100%;
+    }
+
+    @include laptop {
+      box-shadow: 2px 2px 10px $pitstop-yellow;
+    }
+  }
+}
+
+.hero-list {
+  list-style-type: circle;
+  padding: 0 1rem 0 2rem;
+  margin: 1rem 0 2rem 0;
+
+  @include tablet {
+    padding: 0 2.25rem 0 3.25rem;
+  }
+
+  @include laptop {
+    position: relative;
+    z-index: 4;
+    padding: 1rem 2.25rem 2.25rem 3.25rem;
+    margin-bottom: 0;
+    background-color: $white;
+    border-radius: 0.75rem;
+    box-shadow: 2px 2px 10px $pitstop-yellow;
+    transition: box-shadow 0.2s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 2px 10px $pitstop-red;
+    }
+  }
+
+  &__heading {
+    text-align: center;
+    margin: 3rem 0 2rem 0;
+
+    @include tablet {
+      margin: 3rem 0 1rem 0;
+      font-size: 2rem;
+    }
+
+    @include laptop {
+      margin: 2rem 0 0 0;
+      color: $white;
+    }
+  }
+
+  &__item {
+    margin: 1rem 0;
+
+    @include tablet {
+      font-size: 1.2rem;
+    }
+
+    @include laptop {
+      color: $pitstop-activeLightBlue;
+      font-size: 1.25rem;
+      margin: 1.25rem 0 0 0;
+    }
+
+    &--bold {
+      color: $pitstop-red;
+    }
+
+    &--link {
+      text-decoration: none;
+      font-weight: 600;
+      color: $pitstop-hoverLightBlue;
+      transition: color 0.2s ease;
+
+      @include laptop {
+        color: $pitstop-hero;
+      }
+
+      &:hover {
+        color: $pitstop-red;
+      }
+    }
+  }
+}
+
+.hero-wrapper {
+  @include laptop {
+    width: 100%;
+    background-color: $pitstop-hero;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    @include flex-center;
+  }
+}
+
+.image-container {
+  background-color: $pitstop-hero;
+
+  @include tablet {
+    padding: 0;
+    width: 100%;
+  }
+
+  @include laptop {
+    padding: 0;
+  }
+
+  &__heading {
+    margin: 0 0 0.5rem 0;
+    padding-top: 2rem;
+    color: $white;
+
+    @include tablet {
+      font-size: 2rem;
+    }
+
+    @include laptop {
+      display: none;
+    }
+  }
+
+  &__wrapper {
+    padding: 0 1rem;
+
+    @include tablet {
+      padding: 0 2.5rem;
+    }
+
+    @include laptop {
+      padding: 0;
+      width: auto;
+    }
+  }
+}
+
+.content-container {
+  @include tablet {
+    max-width: 63.75rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @include laptop {
+    background-color: $pitstop-hero;
+  }
+}
+
+// Register Container Styling
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $white;
+  margin: 2.5rem 1rem;
+  padding: 2rem 2.25rem;
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  @include tracker-tile;
+
+  @include tablet {
+    margin: 2.5rem;
+  }
+
+  @include laptop {
+    width: 63.75rem;
+    box-sizing: border-box;
+    padding-top: 2.5rem;
+    margin-top: 4rem;
+  }
+
+  &__heading {
+    margin: 0;
+    color: $pitstop-lightBlue;
+    background-color: transparent;
+    text-shadow: 0px 0px 3px $pitstop-hero;
+    font-size: 1.5rem;
+
+    @include tablet {
+      font-size: 1.75rem;
+    }
+
+    @include laptop {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+  }
+}
+
+.register-form__section {
+  @include flex-center;
+  width: 100%;
+}
+
+.team-counter {
+  background-color: $pitstop-hero;
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+
+  @include laptop {
+    width: 100%;
+  }
+
+  &__heading {
+    margin: 2rem 1rem;
+    color: $white;
+  }
+
+  &__wrapper {
+    margin: 0 1rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+  }
+
+  &__container {
+    width: 6rem;
+    height: 5.65625rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.75rem;
+    border: 5px solid $black;
+
+    &--count {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: auto;
+      width: 100%;
+      border-radius: 0.75rem 0.75rem 0 0;
+      text-align: center;
+      padding: 0 0 0.5rem 0;
+    }
+
+    &--team {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: auto;
+      width: 100%;
+      height: 100%;
+      border-radius: 0 0 0.4rem 0.4rem;
+      padding: 0.25rem 0;
+      text-align: center;
+      @include flex-center;
+    }
+  }
+
+  &__card {
+    max-width: 23.625rem;
+
+    @include tablet {
+      max-width: 50rem;
+    }
+
+    @include laptop {
+      max-width: 100%;
+    }
+  }
+}

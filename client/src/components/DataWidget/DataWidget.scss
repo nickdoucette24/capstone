@@ -1,0 +1,132 @@
+@use "../../styles/global/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+
+.data-widget {
+  display: flex;
+  align-items: center;
+  padding: 0 0.25rem;
+  gap: 0.5rem;
+
+  &__button-container {
+    @include flex-center;
+  }
+
+  &__button {
+    background: none;
+    border: 1px solid $grey;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    margin: 0.5rem 0;
+    box-shadow: 1px 1px 2px $grey;
+    color: $pitstop-activeLightBlue;
+    cursor: pointer;
+    font-family: Raleway;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+    @include tablet {
+      font-size: 1rem;
+    }
+
+    &:hover {
+      color: $pitstop-hero;
+      transform: scale(1.02);
+      box-shadow: 1px 1px 2px $pitstop-hero;
+    }
+
+    &:active {
+      box-shadow: none;
+      color: $pitstop-activeLightBlue;
+    }
+  }
+
+  &__intervals {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid $grey;
+    padding: 0.5rem;
+    gap: 0.25rem;
+
+    @include tablet {
+      gap: 0.5rem;
+      padding: 0.75rem;
+    }
+
+    &--section {
+      margin: 0;
+      font-size: 0.7rem;
+
+      @include tablet {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  &__pitstops {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-left: 1px solid $grey;
+    border-right: 1px solid $grey;
+
+    @include tablet {
+      gap: 0.5rem;
+      padding: 0.75rem;
+    }
+
+    &--section {
+      margin: 0;
+      font-size: 0.7rem;
+
+      @include tablet {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  &__carData {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid $grey;
+    border-right: 1px solid $grey;
+    padding: 0.5rem;
+    gap: 0.25rem;
+
+    @include tablet {
+      gap: 0.5rem;
+      padding: 0.75rem;
+    }
+
+    &--section {
+      margin: 0;
+      font-size: 0.7rem;
+
+      @include tablet {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  &__stints {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid $grey;
+    padding: 0.5rem;
+    gap: 0.25rem;
+
+    @include tablet {
+      gap: 0.5rem;
+      padding: 0.75rem;
+    }
+
+    &--section {
+      margin: 0;
+      font-size: 0.7rem;
+
+      @include tablet {
+        font-size: 1rem;
+      }
+    }
+  }
+}

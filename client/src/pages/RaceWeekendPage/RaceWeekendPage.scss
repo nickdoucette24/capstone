@@ -1,0 +1,159 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/global/global" as *;
+
+.race-weekend {
+  padding-top: 5.5rem;
+  margin: 0 1rem;
+  display: flex;
+  flex-direction: column;
+
+  @include tablet {
+    margin: 0 2.5rem;
+  }
+
+  @include laptop {
+    max-width: 63.75rem;
+    margin: auto;
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    background-color: $white;
+    border-radius: 0.75rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 1rem 2rem 2rem 2rem;
+    margin-top: 1rem;
+    transition: box-shadow 0.2s ease-in-out;
+
+    &:hover {
+      box-shadow: $pitstop-red 0px 3px 8px;
+    }
+
+    &--grandprix {
+      margin: 0.5rem 0;
+      color: $pitstop-hoverLightBlue;
+    }
+
+    &--name {
+      margin: 0;
+      color: $pitstop-activeLightBlue;
+    }
+
+    &--fullname {
+      font-size: 1rem;
+    }
+
+    &--country {
+      font-size: 1rem;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 3rem;
+    margin: 1.5rem 0 10rem 0;
+
+    @include laptop {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  &__container {
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    @include laptop {
+      width: 25%;
+      flex-grow: 1;
+    }
+
+    &--p1 {
+      @include session-tile;
+      background-image: url("../../assets/images/photos/practice-session.jpg");
+    }
+
+    &--p2 {
+      @include session-tile;
+      background-image: url("../../assets/images/photos/practice-session-2.jpg");
+    }
+
+    &--p3 {
+      @include session-tile;
+      background-image: url("../../assets/images/photos/practice-session-3.jpg");
+    }
+
+    &--qualifying1 {
+      @include session-tile;
+      background-image: url("../../assets/images/photos/sprint-qualifying.jpg");
+
+      &:hover {
+        box-shadow: $pitstop-green 0px 6px 12px -2px,
+          $pitstop-green 0px 3px 7px -3px;
+      }
+    }
+
+    &--qualifying2 {
+      @include session-tile;
+      background-image: url("../../assets/images/photos/qualifying.jpg");
+
+      &:hover {
+        box-shadow: $pitstop-green 0px 6px 12px -2px,
+          $pitstop-green 0px 3px 7px -3px;
+      }
+    }
+
+    &--race1 {
+      @include session-tile;
+      background-image: url("../../assets/images/photos/sprint.jpg");
+
+      &:hover {
+        box-shadow: $pitstop-red 0px 6px 12px -2px,
+          $pitstop-green 0px 3px 7px -3px;
+      }
+    }
+
+    &--race2 {
+      @include session-tile;
+      background-image: url("../../assets/images/photos/race.jpg");
+
+      &:hover {
+        box-shadow: $pitstop-red 0px 6px 12px -2px,
+          $pitstop-green 0px 3px 7px -3px;
+      }
+    }
+
+    &--main-race {
+      @include session-tile;
+    }
+  }
+
+  &__link {
+    &--practice {
+      background-color: $pitstop-lightBlue;
+      padding: 0.5rem 1rem;
+    }
+
+    &--qualifying {
+      background-color: $pitstop-green;
+      padding: 0.5rem 1rem;
+    }
+
+    &--race {
+      background-color: $pitstop-red;
+      padding: 0.5rem 1rem;
+    }
+  }
+
+  &__session {
+    margin: 1rem 0 0 0;
+    font-size: 1.25rem;
+  }
+}
