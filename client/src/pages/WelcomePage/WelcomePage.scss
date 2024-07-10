@@ -100,7 +100,7 @@
         display: block;
         position: absolute;
         width: 100%;
-        top: 7.84rem;
+        top: 8.79rem;
         height: 45rem;
         z-index: 0;
         opacity: 0.5;
@@ -191,11 +191,13 @@
     justify-content: space-between;
     align-items: center;
     width: 63.75rem;
-    margin: 5rem 0;
+    margin: 4rem 0;
+    gap: 2.5rem;
   }
 
   &__description {
     width: 100%;
+    background-color: $white;
 
     @include tablet {
       display: flex;
@@ -204,18 +206,22 @@
     }
 
     @include laptop {
-      width: 30rem;
+      width: 55rem;
     }
   }
 
   &__image {
     width: 100%;
-    max-width: 43rem;
     border: 1px solid $pitstop-red;
+    max-width: 43rem;
     border-radius: 8px;
+    margin-bottom: 2rem;
+
+    @include tablet {
+      max-width: 100%;
+    }
 
     @include laptop {
-      width: 32rem;
       box-shadow: 2px 2px 10px $pitstop-yellow;
     }
   }
@@ -305,10 +311,11 @@
 }
 
 .image-container {
-  padding: 0 1rem;
+  background-color: $pitstop-hero;
 
   @include tablet {
-    padding: 0 2.25rem;
+    padding: 0;
+    width: 100%;
   }
 
   @include laptop {
@@ -317,6 +324,8 @@
 
   &__heading {
     margin: 0 0 0.5rem 0;
+    padding-top: 2rem;
+    color: $white;
 
     @include tablet {
       font-size: 2rem;
@@ -326,6 +335,19 @@
       display: none;
     }
   }
+
+  &__wrapper {
+    padding: 0 1rem;
+
+    @include tablet {
+      padding: 0 2.5rem;
+    }
+
+    @include laptop {
+      padding: 0;
+      width: auto;
+    }
+  }
 }
 
 .content-container {
@@ -333,6 +355,10 @@
     max-width: 63.75rem;
     display: flex;
     flex-direction: column;
+  }
+
+  @include laptop {
+    background-color: $pitstop-hero;
   }
 }
 
@@ -355,6 +381,8 @@
   @include laptop {
     width: 63.75rem;
     box-sizing: border-box;
+    padding-top: 2.5rem;
+    margin-top: 4rem;
   }
 
   &__heading {
@@ -378,4 +406,72 @@
 .register-form__section {
   @include flex-center;
   width: 100%;
+}
+
+.team-counter {
+  background-color: $pitstop-hero;
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+
+  @include laptop {
+    width: 100%;
+  }
+
+  &__heading {
+    margin: 2rem 1rem;
+    color: $white;
+  }
+
+  &__wrapper {
+    margin: 0 1rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+  }
+
+  &__container {
+    width: 6rem;
+    height: 5.65625rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.75rem;
+    border: 5px solid $black;
+
+    &--count {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: auto;
+      width: 100%;
+      border-radius: 0.75rem 0.75rem 0 0;
+      text-align: center;
+      padding: 0 0 0.5rem 0;
+    }
+
+    &--team {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: auto;
+      width: 100%;
+      height: 100%;
+      border-radius: 0 0 0.4rem 0.4rem;
+      padding: 0.25rem 0;
+      text-align: center;
+      @include flex-center;
+    }
+  }
+
+  &__card {
+    max-width: 23.625rem;
+
+    @include tablet {
+      max-width: 50rem;
+    }
+
+    @include laptop {
+      max-width: 100%;
+    }
+  }
 }

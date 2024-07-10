@@ -1,10 +1,14 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import heroImage from "../../assets/images/photos/example-tracker.png";
 import "./WelcomePage.scss";
 
+const url = process.env.REACT_APP_SERVER_URL;
+
 const WelcomePage = ({ setUser }) => {
+  const [teamsCount, setTeamsCount] = useState([]);
   const location = useLocation();
 
   useEffect(() => {
@@ -20,6 +24,21 @@ const WelcomePage = ({ setUser }) => {
         window.scrollTo({ top: offset, behavior: "smooth" });
       }
     }
+
+    const getTeams = async () => {
+      try {
+        const response = await axios.get(`${url}/teams-count`);
+        const countData = response.data.content;
+        const sortedCountData = countData.sort(
+          (a, b) => b.user_count - a.user_count
+        );
+        setTeamsCount(sortedCountData);
+      } catch (error) {
+        console.error("Error retrieving teams: ", error);
+      }
+    };
+
+    getTeams();
   }, [location]);
 
   return (
@@ -36,12 +55,16 @@ const WelcomePage = ({ setUser }) => {
         <div className="hero-wrapper">
           <div className="hero-container">
             <div className="image-container">
-              <h3 className="image-container__heading">Live Session Tracker</h3>
-              <img
-                className="hero-container__image"
-                src={heroImage}
-                alt="example of the live race tracker"
-              />
+              <div className="image-container__wrapper">
+                <h3 className="image-container__heading">
+                  Live Session Tracker
+                </h3>
+                <img
+                  className="hero-container__image"
+                  src={heroImage}
+                  alt="example of the live race tracker"
+                />
+              </div>
             </div>
             <div className="hero-container__description">
               <div className="heading-container">
@@ -96,6 +119,46 @@ const WelcomePage = ({ setUser }) => {
           <h4 className="register-container__heading">Create an account</h4>
           <div className="register-form__section">
             <RegisterForm setUser={setUser} />
+          </div>
+        </div>
+        <div className="team-counter">
+          <div className="team-counter__card">
+            <h3 className="team-counter__heading">Total Support</h3>
+            <div className="team-counter__wrapper">
+              {teamsCount.length > 0 ? (
+                teamsCount.map((team) => (
+                  <div
+                    className="team-counter__container"
+                    key={team.id}
+                    style={{
+                      backgroundColor: team.primary_color,
+                      borderColor: team.secondary_color,
+                    }}
+                  >
+                    <div
+                      className="team-counter__container--count"
+                      style={{
+                        color: team.alternative_color,
+                        backgroundColor: team.primary_color,
+                      }}
+                    >
+                      {team.user_count}
+                    </div>
+                    <div
+                      className="team-counter__container--team"
+                      style={{
+                        color: team.primary_color,
+                        backgroundColor: team.special_color,
+                      }}
+                    >
+                      {team.team_name}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div>Loading...</div>
+              )}
+            </div>
           </div>
         </div>
       </div>

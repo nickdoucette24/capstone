@@ -9,8 +9,11 @@ const ProfilePage = () => {
   const [nextSession, setNextSession] = useState("");
   const [currentRaceDetails, setCurrentRaceDetails] = useState({});
   const [favouriteTeam, setFavouriteTeam] = useState("");
+  const [formattedFavouriteTeam, setFormattedFavouriteTeam] = useState("");
   const [driverStandings, setDriverStandings] = useState([]);
   const [constructorStandings, setConstructorStandings] = useState([]);
+  const [teams, setTeams] = useState([]);
+  const [teamColours, setTeamColours] = useState({});
   const { username, id } = useParams();
 
   useEffect(() => {
@@ -20,8 +23,18 @@ const ProfilePage = () => {
           params: { id },
         });
         setFavouriteTeam(response.data.content);
+        setFormattedFavouriteTeam(formatTeamName(response.data.content));
       } catch (error) {
-        console.error("Error retrieving favouite team: ", error);
+        console.error("Error retrieving favourite team: ", error);
+      }
+    };
+
+    const getTeamColours = async (id) => {
+      try {
+        const response = await axios.get(`${url}/favourite-team/${id}`);
+        setTeamColours(response.data.content);
+      } catch (error) {
+        console.error("Error retrieving favourite team: ", error);
       }
     };
 
@@ -71,6 +84,17 @@ const ProfilePage = () => {
       }
     };
 
+    const getTeams = async () => {
+      try {
+        const response = await axios.get(`${url}/teams-count`);
+        setTeams(response.data.content);
+      } catch (error) {
+        console.error("Error retrieving teams: ", error);
+      }
+    };
+
+    getTeams();
+    getTeamColours(id);
     getCurrentRaceDetails();
     getNextSessionTime();
     getDriverStandings();
@@ -78,14 +102,116 @@ const ProfilePage = () => {
     getFavouriteTeam(id);
   }, [id]);
 
+  const formatTeamName = (teamName) => {
+    return teamName.toLowerCase().replace(/\s+/g, "");
+  };
+
+  const handleTeamChange = async (event) => {
+    const selectedTeamName = event.target.value;
+    const selectedTeam = teams.find(
+      (team) => team.team_name === selectedTeamName
+    );
+
+    if (selectedTeam) {
+      try {
+        await axios.put(`${url}/favourite-team`, {
+          user_id: id,
+          team_id: selectedTeam.id,
+        });
+
+        if (selectedTeam.team_name === "Alpine") {
+          setTeamColours({
+            primary_color: selectedTeam.secondary_color,
+            secondary_color: selectedTeam.primary_color,
+            alternative_color: selectedTeam.alternative_color,
+            special_color: selectedTeam.special_color,
+          });
+        } else if (selectedTeam.team_name === "Mercedes") {
+          setTeamColours({
+            primary_color: selectedTeam.secondary_color,
+            secondary_color: selectedTeam.primary_color,
+            alternative_color: selectedTeam.alternative_color,
+            special_color: selectedTeam.special_color,
+          });
+        } else if (selectedTeam.team_name === "McLaren") {
+          setTeamColours({
+            primary_color: selectedTeam.secondary_color,
+            secondary_color: selectedTeam.primary_color,
+            alternative_color: selectedTeam.alternative_color,
+            special_color: selectedTeam.special_color,
+          });
+        } else if (selectedTeam.team_name === "Aston Martin") {
+          setTeamColours({
+            primary_color: selectedTeam.primary_color,
+            secondary_color: selectedTeam.special_color,
+            alternative_color: selectedTeam.alternative_color,
+            special_color: selectedTeam.secondary_color,
+          });
+        } else if (selectedTeam.team_name === "Red Bull") {
+          setTeamColours({
+            primary_color: selectedTeam.primary_color,
+            secondary_color: selectedTeam.special_color,
+            alternative_color: selectedTeam.secondary_color,
+            special_color: selectedTeam.alternative_color,
+          });
+        } else if (selectedTeam.team_name === "RB") {
+          setTeamColours({
+            primary_color: selectedTeam.primary_color,
+            secondary_color: selectedTeam.special_color,
+            alternative_color: selectedTeam.secondary_color,
+            special_color: selectedTeam.alternative_color,
+          });
+        } else {
+          setTeamColours({
+            primary_color: selectedTeam.primary_color,
+            secondary_color: selectedTeam.secondary_color,
+            alternative_color: selectedTeam.alternative_color,
+            special_color: selectedTeam.special_color,
+          });
+        }
+
+        setFavouriteTeam(selectedTeam.team_name);
+        setFormattedFavouriteTeam(formatTeamName(selectedTeam.team_name));
+      } catch (error) {
+        console.error("Error updating favourite team: ", error);
+      }
+    }
+  };
+
+  const sortedTeams = [
+    ...teams.filter((team) => team.team_name !== favouriteTeam),
+  ];
+
   return (
-    <div className="profile-page">
+    <div
+      className="profile-page"
+      style={{ backgroundColor: teamColours.primary_color }}
+    >
       <div className="profile-details">
+        <div className={`profile-details__${formattedFavouriteTeam}`}></div>
         <div className="profile-details__info">
-          <span className="profile-details__heading">Profile Details</span>
+          <span className="profile-details__heading">Profile</span>
           <div className="profile-details__content">
             <h1 className="profile-details__content--user">{username}</h1>
-            <h3 className="profile-details__content--team">{favouriteTeam}</h3>
+            <select
+              className="profile-details__content--team"
+              style={{
+                backgroundColor: teamColours.primary_color,
+                color: teamColours.secondary_color,
+                borderColor: teamColours.secondary_color,
+              }}
+              value={favouriteTeam}
+              onChange={handleTeamChange}
+            >
+              <option key="favourite" value={favouriteTeam}>
+                {favouriteTeam}
+              </option>
+              {sortedTeams.map((team) => (
+                <option key={team.id} value={team.team_name}>
+                  {team.team_name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="profile-page__current">
@@ -148,9 +274,6 @@ const ProfilePage = () => {
           </div>
         </div>
       </div>
-      {/* <div className="profile-page__content--bottom">
-          <div></div>
-        </div> */}
     </div>
   );
 };
