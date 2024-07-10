@@ -120,6 +120,10 @@
     gap: 0.5rem;
   }
 
+  @include laptop {
+    margin-right: 0;
+  }
+
   &__button {
     @include auth-button;
   }

@@ -118,24 +118,6 @@ const RegisterForm = ({ setUser }) => {
     } catch (error) {
       console.error("Error Registering User: ", error);
     }
-    //   if (response.data.success) {
-    //     localStorage.setItem("token", response.data.token);
-    //     const userInfo = {
-    //       username: response.data.username,
-    //       id: response.data.id,
-    //     };
-    //     localStorage.setItem("user", JSON.stringify(userInfo));
-    //     setUser(userInfo);
-    //     handleLoginModalClose();
-    //     setTimeout(() => {
-    //       navigate(`/home/${response.data.username}/${response.data.id}`);
-    //     }, 200);
-    //   } else {
-    //     setErrors({ form: response.data.message });
-    //   }
-    // } catch (error) {
-    //   setErrors({ form: "Invalid login credentials." });
-    // }
   };
 
   const teamList = [
@@ -146,7 +128,7 @@ const RegisterForm = ({ setUser }) => {
     { name: "kicksauber", id: "5" },
     { name: "mclaren", id: "6" },
     { name: "mercedes", id: "7" },
-    { name: "vcarb", id: "8" },
+    { name: "rb", id: "8" },
     { name: "redbull", id: "9" },
     { name: "williams", id: "10" },
   ];

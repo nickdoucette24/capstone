@@ -12,6 +12,10 @@ const ThisYearPage = () => {
   const [view, setView] = useState("drivers");
   const [pastRaces, setPastRaces] = useState([]);
 
+  const handleLink = (url) => {
+    window.location.href = url;
+  };
+
   useEffect(() => {
     const getDriverStandings = async () => {
       try {
@@ -118,7 +122,13 @@ const ThisYearPage = () => {
         <div className="this-year__past-races--container">
           {pastRaces.length > 0 ? (
             pastRaces.map((race) => (
-              <div className="past-race" key={race.meeting_key}>
+              <div
+                className="past-race"
+                key={race.meeting_key}
+                onClick={() =>
+                  handleLink("https://www.formula1.com/en/racing/2024")
+                }
+              >
                 <h4 className="past-race__heading">{race.meeting_name}</h4>
               </div>
             ))

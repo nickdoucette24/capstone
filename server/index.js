@@ -64,6 +64,45 @@ app.get("/users", async (req, res) => {
   }
 });
 
+// Route to Get Favourite Team
+app.get("/favourite-team/:user_id", async (req, res) => {
+  const { user_id } = req.params;
+
+  if (!user_id) {
+    return res.status(400).json("Bad Request: User ID is required");
+  }
+
+  try {
+    // Join the users and teams tables to get the favourite team details
+    const teamColours = await knex("users")
+      .join("teams", "users.team_id", "teams.id")
+      .where("users.id", user_id)
+      .select(
+        "teams.id as team_id",
+        "teams.team_name",
+        "teams.primary_color",
+        "teams.secondary_color",
+        "teams.alternative_color",
+        "teams.special_color"
+      )
+      .first();
+
+    if (!teamColours) {
+      return res.status(404).json("Favourite team not found for the user");
+    }
+
+    return res.status(200).json({
+      message: "Favourite team retrieved successfully",
+      content: teamColours,
+    });
+  } catch (error) {
+    console.error("Error retrieving favourite team: ", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
 // Route to Edit Favourite Team
 app.put("/favourite-team", async (req, res) => {
   const { user_id, team_id } = req.body;
@@ -75,17 +114,63 @@ app.put("/favourite-team", async (req, res) => {
   }
 
   try {
-    await knex("users")
-      .where({ id: user_id })
-      .update({ favourite_team_id: team_id });
+    await knex("users").where({ id: user_id }).update({ team_id: team_id });
 
-    return res
-      .status(200)
-      .json({ message: "Favorite team updated successfully" });
+    const updatedTeam = await knex("teams")
+      .where({ id: team_id })
+      .select(
+        "team_name",
+        "primary_color",
+        "secondary_color",
+        "alternative_color",
+        "special_color"
+      )
+      .first();
+
+    return res.status(200).json({
+      message: "Favorite team updated successfully",
+      team: updatedTeam,
+    });
   } catch (error) {
     console.error("Error updating favorite team: ", error);
     res.status(500).json({
       message: "Internal Server Error",
+    });
+  }
+});
+
+// Basic GET request to get teams count from MySQL users table
+app.get("/teams-count", async (_req, res) => {
+  try {
+    const teamCounts = await knex("users")
+      .join("teams", "users.team_id", "teams.id")
+      .select(
+        "teams.id",
+        "teams.team_name",
+        "teams.primary_color",
+        "teams.secondary_color",
+        "teams.special_color",
+        "teams.alternative_color"
+      )
+      .count("users.id as user_count")
+      .groupBy(
+        "teams.id",
+        "teams.team_name",
+        "teams.primary_color",
+        "teams.secondary_color",
+        "teams.special_color",
+        "teams.alternative_color"
+      );
+
+    res.status(200).json({
+      message: "Teams count retrieved successfully.",
+      success: true,
+      content: teamCounts,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error Getting Teams Count",
+      success: false,
     });
   }
 });
